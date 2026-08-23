@@ -14,7 +14,7 @@ const generateOrderNumber = () => {
 // @access  Private
 const createOrder = async (req, res, next) => {
   try {
-    const { items, shippingAddress, paymentMethod, couponCode } = req.body;
+    const { items, shippingAddress, paymentMethod, paymentDetails, couponCode } = req.body;
 
     if (req.user.status === 'BLOCKED') {
       return res.status(403).json({
@@ -92,6 +92,11 @@ const createOrder = async (req, res, next) => {
       items: orderItems,
       shippingAddress,
       paymentMethod: method,
+      paymentDetails: {
+        upiId: paymentDetails?.upiId || '',
+        cardNumberMasked: paymentDetails?.cardNumberMasked || '',
+        cardExpiry: paymentDetails?.cardExpiry || '',
+      },
       paymentStatus,
       orderStatus: 'Pending',
       subtotal,

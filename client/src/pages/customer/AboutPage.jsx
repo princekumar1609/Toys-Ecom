@@ -7,8 +7,8 @@ import Button from '../../components/common/Button';
 
 export default function AboutPage() {
   return (
-    <div className="py-6 space-y-12">
-      <Container>
+    <div className="py-6">
+      <Container className="space-y-12">
         <Breadcrumb items={[{ label: 'About Us' }]} />
 
         {/* HERO BANNER */}
@@ -23,7 +23,7 @@ export default function AboutPage() {
         </div>
 
         {/* STATS COUNTERS */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 py-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <Card className="p-6 text-center border border-gray-200">
             <span className="text-3xl font-extrabold text-amber-500 font-display block">50,000+</span>
             <span className="text-xs text-gray-500 font-medium">Happy Children</span>
@@ -85,16 +85,18 @@ export default function AboutPage() {
         </div>
 
         {/* CTA CALLOUT */}
-        <div className="bg-gray-900 text-white rounded-3xl p-8 text-center space-y-4">
-          <h3 className="text-2xl font-bold font-display">Ready To Explore Our Toy Store?</h3>
-          <p className="text-xs text-gray-400 max-w-md mx-auto">
+        <div className="bg-gray-900 text-white rounded-3xl p-8 sm:p-12 text-center space-y-4 my-8 shadow-lg">
+          <h3 className="text-2xl sm:text-3xl font-bold font-display">Ready To Explore Our Toy Store?</h3>
+          <p className="text-xs sm:text-sm text-gray-300 max-w-md mx-auto leading-relaxed">
             Discover action figures, lego building sets, wooden puzzles, and soft plushies today.
           </p>
-          <Link to="/shop">
-            <Button variant="primary" size="md">
-              Browse Toys Catalog Now →
-            </Button>
-          </Link>
+          <div className="pt-2 flex justify-center">
+            <Link to="/shop">
+              <Button variant="primary" size="md">
+                Browse Toys Catalog Now →
+              </Button>
+            </Link>
+          </div>
         </div>
       </Container>
     </div>

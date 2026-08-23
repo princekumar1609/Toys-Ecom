@@ -54,6 +54,11 @@ const orderSchema = new mongoose.Schema(
       enum: ['COD', 'CARD', 'UPI'],
       default: 'COD'
     },
+    paymentDetails: {
+      upiId: { type: String, default: '' },
+      cardNumberMasked: { type: String, default: '' },
+      cardExpiry: { type: String, default: '' }
+    },
     paymentStatus: {
       type: String,
       enum: ['PENDING', 'PAID', 'FAILED', 'REFUNDED'],

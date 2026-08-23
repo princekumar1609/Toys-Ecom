@@ -1,12 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Container from '../../components/common/Container';
 import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import Badge from '../../components/common/Badge';
 
 export default function OrderSuccessPage() {
-  const orderNumber = 'TN-2026-8942';
+  const location = useLocation();
+  const order = location.state?.order;
+
+  const orderNumber = order?.orderNumber || 'TN-2026';
+  const grandTotal = order?.grandTotal || 0;
+  const shippingAddress = order?.shippingAddress;
+
+  const renderPaymentMethodLabel = () => {
+    if (!order) return 'Cash On Delivery (COD)';
+    if (order.paymentMethod === 'UPI') {
+      return `📱 UPI (${order.paymentDetails?.upiId || 'Instant Payment'})`;
+    }
+    if (order.paymentMethod === 'CARD') {
+      return `💳 Credit/Debit Card (${order.paymentDetails?.cardNumberMasked || 'Card'})`;
+    }
+    return '💵 Cash On Delivery (COD)';
+  };
+
+  const addressText = shippingAddress
+    ? `${shippingAddress.street}, ${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.postalCode}`
+    : 'Provided Shipping Address';
 
   return (
     <div className="py-12 space-y-6">
@@ -32,8 +52,8 @@ export default function OrderSuccessPage() {
           {/* Delivery Estimate Banner */}
           <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-left flex items-center justify-between text-xs sm:text-sm">
             <div>
-              <span className="text-gray-500 block text-xs">Estimated Delivery</span>
-              <strong className="text-amber-900 font-bold">Thursday, Aug 21, 2026</strong>
+              <span className="text-gray-500 block text-xs">Estimated Express Delivery</span>
+              <strong className="text-amber-900 font-bold">2-3 Business Days</strong>
             </div>
             <Badge variant="amber">2-3 Days Express</Badge>
           </div>
@@ -41,22 +61,22 @@ export default function OrderSuccessPage() {
           {/* Order Details Summary */}
           <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 text-left space-y-3 text-xs text-gray-600">
             <h3 className="font-bold text-gray-900 text-sm border-b pb-2">Order Information Summary</h3>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <span className="text-gray-400 block">Payment Method</span>
-                <strong className="text-gray-800">Cash On Delivery (COD)</strong>
+                <strong className="text-gray-800">{renderPaymentMethodLabel()}</strong>
               </div>
               <div>
                 <span className="text-gray-400 block">Shipping Address</span>
-                <strong className="text-gray-800">Flat 402, MG Road, Bengaluru</strong>
+                <strong className="text-gray-800">{addressText}</strong>
               </div>
               <div>
                 <span className="text-gray-400 block">Contact Phone</span>
-                <strong className="text-gray-800">+91 98765 43210</strong>
+                <strong className="text-gray-800">{shippingAddress?.phone || 'Provided Phone Number'}</strong>
               </div>
               <div>
-                <span className="text-gray-400 block">Grand Total Paid</span>
-                <strong className="text-amber-600 font-bold text-sm">₹4,197</strong>
+                <span className="text-gray-400 block">Grand Total</span>
+                <strong className="text-amber-600 font-bold text-sm">₹{grandTotal}</strong>
               </div>
             </div>
           </div>

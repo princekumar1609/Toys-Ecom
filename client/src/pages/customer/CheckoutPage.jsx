@@ -17,14 +17,21 @@ export default function CheckoutPage() {
   const [fullName, setFullName] = useState(user?.name || '');
   const [phone, setPhone] = useState(user?.phone || '');
   const [street, setStreet] = useState('');
-  const [city, setCity] = useState('Bengaluru');
-  const [state, setState] = useState('Karnataka');
-  const [postalCode, setPostalCode] = useState('560001');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [postalCode, setPostalCode] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('COD');
+
+  // Specific Payment Method Details
+  const [upiId, setUpiId] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardExpiry, setCardExpiry] = useState('');
+  const [cardCvv, setCardCvv] = useState('');
 
   const [validationResult, setValidationResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     async function loadCartSummary() {
@@ -41,17 +48,99 @@ export default function CheckoutPage() {
     loadCartSummary();
   }, [cartItems]);
 
+  const handlePhoneChange = (e) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+    setPhone(val);
+    if (errors.phone) setErrors((prev) => ({ ...prev, phone: null }));
+  };
+
+  const handlePostalCodeChange = (e) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, 6);
+    setPostalCode(val);
+    if (errors.postalCode) setErrors((prev) => ({ ...prev, postalCode: null }));
+  };
+
+  const handleCardNumberChange = (e) => {
+    const raw = e.target.value.replace(/\D/g, '').slice(0, 16);
+    const formatted = raw.replace(/(.{4})/g, '$1 ').trim();
+    setCardNumber(formatted);
+    if (errors.cardNumber) setErrors((prev) => ({ ...prev, cardNumber: null }));
+  };
+
+  const handleCardExpiryChange = (e) => {
+    let raw = e.target.value.replace(/\D/g, '').slice(0, 4);
+    if (raw.length >= 3) {
+      raw = `${raw.slice(0, 2)}/${raw.slice(2)}`;
+    }
+    setCardExpiry(raw);
+    if (errors.cardExpiry) setErrors((prev) => ({ ...prev, cardExpiry: null }));
+  };
+
+  const handleCardCvvChange = (e) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, 4);
+    setCardCvv(val);
+    if (errors.cardCvv) setErrors((prev) => ({ ...prev, cardCvv: null }));
+  };
+
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     setErrorMessage('');
+    setErrors({});
 
     if (!user) {
       setErrorMessage('Please sign in before placing an order.');
       return;
     }
 
-    if (!fullName || !phone || !street || !city || !postalCode) {
-      setErrorMessage('Please complete all shipping address fields.');
+    const newErrors = {};
+
+    if (!fullName.trim() || fullName.trim().length < 2) {
+      newErrors.fullName = 'Please enter your full name (at least 2 characters).';
+    }
+
+    if (!phone.trim() || !/^[6-9]\d{9}$/.test(phone.trim())) {
+      newErrors.phone = 'Please enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.';
+    }
+
+    if (!street.trim() || street.trim().length < 5) {
+      newErrors.street = 'Please enter a complete street address (flat, building, street name).';
+    }
+
+    if (!city.trim()) {
+      newErrors.city = 'Please enter your City.';
+    }
+
+    if (!state.trim()) {
+      newErrors.state = 'Please enter your State.';
+    }
+
+    if (!postalCode.trim() || !/^\d{6}$/.test(postalCode.trim())) {
+      newErrors.postalCode = 'Please enter a valid 6-digit PIN code.';
+    }
+
+    if (paymentMethod === 'UPI') {
+      const upiRegex = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+      if (!upiId.trim() || !upiRegex.test(upiId.trim())) {
+        newErrors.upiId = 'Please enter a valid UPI ID (e.g. username@upi or 9876543210@paytm).';
+      }
+    }
+
+    if (paymentMethod === 'CARD') {
+      const cleanCard = cardNumber.replace(/\s+/g, '');
+      if (!cleanCard || !/^\d{15,19}$/.test(cleanCard)) {
+        newErrors.cardNumber = 'Please enter a valid 16-digit card number.';
+      }
+      if (!cardExpiry.trim() || !/^(0[1-9]|1[0-2])\/\d{2}$/.test(cardExpiry.trim())) {
+        newErrors.cardExpiry = 'Please enter a valid Expiry Date in MM/YY format.';
+      }
+      if (!cardCvv.trim() || !/^\d{3,4}$/.test(cardCvv.trim())) {
+        newErrors.cardCvv = 'Please enter a valid 3 or 4-digit CVV security code.';
+      }
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setErrorMessage('Please fix the highlighted errors below before placing your order.');
       return;
     }
 
@@ -60,15 +149,20 @@ export default function CheckoutPage() {
       const orderPayload = {
         items: cartItems.map((i) => ({ productId: i.productId, quantity: i.quantity })),
         shippingAddress: {
-          fullName,
-          phone,
-          street,
-          city,
-          state,
-          postalCode,
+          fullName: fullName.trim(),
+          phone: phone.trim(),
+          street: street.trim(),
+          city: city.trim(),
+          state: state.trim(),
+          postalCode: postalCode.trim(),
           country: 'India',
         },
         paymentMethod,
+        paymentDetails: {
+          upiId: paymentMethod === 'UPI' ? upiId.trim() : '',
+          cardNumberMasked: paymentMethod === 'CARD' ? `**** **** **** ${cardNumber.replace(/\s+/g, '').slice(-4)}` : '',
+          cardExpiry: paymentMethod === 'CARD' ? cardExpiry.trim() : '',
+        },
       };
 
       const res = await orderApi.createOrder(orderPayload);
@@ -93,7 +187,7 @@ export default function CheckoutPage() {
         </h1>
 
         {errorMessage && (
-          <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-bold mb-4">
+          <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-bold mb-4 animate-shake">
             ⚠️ {errorMessage}
           </div>
         )}
@@ -104,31 +198,149 @@ export default function CheckoutPage() {
             <Card className="p-6 border border-gray-200 shadow-xs space-y-4">
               <h3 className="font-bold text-gray-900 text-base border-b pb-2">1. Shipping Address</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input label="Full Name" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
-                <Input label="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+                <Input
+                  label="Full Name"
+                  placeholder="Full name"
+                  value={fullName}
+                  onChange={(e) => {
+                    setFullName(e.target.value);
+                    if (errors.fullName) setErrors((prev) => ({ ...prev, fullName: null }));
+                  }}
+                  error={errors.fullName}
+                  required
+                />
+                <Input
+                  label="Phone Number"
+                  placeholder="10-digit mobile number"
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  error={errors.phone}
+                  required
+                />
               </div>
-              <Input label="Street Address" placeholder="Flat / Building / Street" value={street} onChange={(e) => setStreet(e.target.value)} required />
+              <Input
+                label="Street Address"
+                placeholder="Flat / Building / Street"
+                value={street}
+                onChange={(e) => {
+                  setStreet(e.target.value);
+                  if (errors.street) setErrors((prev) => ({ ...prev, street: null }));
+                }}
+                error={errors.street}
+                required
+              />
               <div className="grid grid-cols-3 gap-3">
-                <Input label="City" value={city} onChange={(e) => setCity(e.target.value)} required />
-                <Input label="State" value={state} onChange={(e) => setState(e.target.value)} required />
-                <Input label="PIN Code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} required />
+                <Input
+                  label="City"
+                  placeholder="City"
+                  value={city}
+                  onChange={(e) => {
+                    setCity(e.target.value);
+                    if (errors.city) setErrors((prev) => ({ ...prev, city: null }));
+                  }}
+                  error={errors.city}
+                  required
+                />
+                <Input
+                  label="State"
+                  placeholder="State"
+                  value={state}
+                  onChange={(e) => {
+                    setState(e.target.value);
+                    if (errors.state) setErrors((prev) => ({ ...prev, state: null }));
+                  }}
+                  error={errors.state}
+                  required
+                />
+                <Input
+                  label="PIN Code"
+                  placeholder="PIN Code"
+                  value={postalCode}
+                  onChange={handlePostalCodeChange}
+                  error={errors.postalCode}
+                  required
+                />
               </div>
             </Card>
 
             <Card className="p-6 border border-gray-200 shadow-xs space-y-4">
               <h3 className="font-bold text-gray-900 text-base border-b pb-2">2. Select Payment Method</h3>
               <div className="space-y-3 text-xs">
-                <label className="flex items-center gap-3 p-3 border rounded-xl cursor-pointer hover:bg-amber-50/50">
-                  <input type="radio" name="payment" value="COD" checked={paymentMethod === 'COD'} onChange={() => setPaymentMethod('COD')} />
-                  <span className="font-bold">💵 Cash on Delivery (COD)</span>
+                {/* COD Option */}
+                <label className={`flex flex-col p-3 border rounded-xl cursor-pointer transition-all ${paymentMethod === 'COD' ? 'border-amber-500 bg-amber-50/40 ring-2 ring-amber-200' : 'hover:bg-gray-50'}`}>
+                  <div className="flex items-center gap-3">
+                    <input type="radio" name="payment" value="COD" checked={paymentMethod === 'COD'} onChange={() => { setPaymentMethod('COD'); setErrors({}); }} />
+                    <span className="font-bold text-gray-900">💵 Cash on Delivery (COD)</span>
+                  </div>
+                  {paymentMethod === 'COD' && (
+                    <p className="text-[11px] text-gray-500 mt-2 ml-6">Pay via Cash, Card, or UPI QR scanner upon delivery.</p>
+                  )}
                 </label>
-                <label className="flex items-center gap-3 p-3 border rounded-xl cursor-pointer hover:bg-amber-50/50">
-                  <input type="radio" name="payment" value="UPI" checked={paymentMethod === 'UPI'} onChange={() => setPaymentMethod('UPI')} />
-                  <span className="font-bold">📱 UPI Instant Payment</span>
+
+                {/* UPI Option */}
+                <label className={`flex flex-col p-3 border rounded-xl cursor-pointer transition-all ${paymentMethod === 'UPI' ? 'border-amber-500 bg-amber-50/40 ring-2 ring-amber-200' : 'hover:bg-gray-50'}`}>
+                  <div className="flex items-center gap-3">
+                    <input type="radio" name="payment" value="UPI" checked={paymentMethod === 'UPI'} onChange={() => { setPaymentMethod('UPI'); setErrors({}); }} />
+                    <span className="font-bold text-gray-900">📱 UPI Instant Payment (GPay, PhonePe, Paytm, BHIM)</span>
+                  </div>
+                  {paymentMethod === 'UPI' && (
+                    <div className="mt-3 ml-6 space-y-2 bg-white p-3 rounded-xl border border-amber-200" onClick={(e) => e.stopPropagation()}>
+                      <Input
+                        label="Enter your UPI ID (VPA)"
+                        placeholder="e.g. username@upi or 9876543210@paytm"
+                        value={upiId}
+                        onChange={(e) => {
+                          setUpiId(e.target.value);
+                          if (errors.upiId) setErrors((prev) => ({ ...prev, upiId: null }));
+                        }}
+                        error={errors.upiId}
+                        required
+                      />
+                      <span className="text-[10px] text-gray-400 block">A payment request will be sent to your UPI app.</span>
+                    </div>
+                  )}
                 </label>
-                <label className="flex items-center gap-3 p-3 border rounded-xl cursor-pointer hover:bg-amber-50/50">
-                  <input type="radio" name="payment" value="CARD" checked={paymentMethod === 'CARD'} onChange={() => setPaymentMethod('CARD')} />
-                  <span className="font-bold">💳 Credit / Debit Card</span>
+
+                {/* CARD Option */}
+                <label className={`flex flex-col p-3 border rounded-xl cursor-pointer transition-all ${paymentMethod === 'CARD' ? 'border-amber-500 bg-amber-50/40 ring-2 ring-amber-200' : 'hover:bg-gray-50'}`}>
+                  <div className="flex items-center gap-3">
+                    <input type="radio" name="payment" value="CARD" checked={paymentMethod === 'CARD'} onChange={() => { setPaymentMethod('CARD'); setErrors({}); }} />
+                    <span className="font-bold text-gray-900">💳 Credit / Debit Card (Visa, MasterCard, RuPay)</span>
+                  </div>
+                  {paymentMethod === 'CARD' && (
+                    <div className="mt-3 ml-6 space-y-3 bg-white p-3 rounded-xl border border-amber-200" onClick={(e) => e.stopPropagation()}>
+                      <Input
+                        label="Card Number"
+                        placeholder="1234 5678 9012 3456"
+                        maxLength={19}
+                        value={cardNumber}
+                        onChange={handleCardNumberChange}
+                        error={errors.cardNumber}
+                        required
+                      />
+                      <div className="grid grid-cols-2 gap-3">
+                        <Input
+                          label="Expiry Date"
+                          placeholder="MM/YY"
+                          maxLength={5}
+                          value={cardExpiry}
+                          onChange={handleCardExpiryChange}
+                          error={errors.cardExpiry}
+                          required
+                        />
+                        <Input
+                          label="CVV"
+                          placeholder="123"
+                          type="password"
+                          maxLength={4}
+                          value={cardCvv}
+                          onChange={handleCardCvvChange}
+                          error={errors.cardCvv}
+                          required
+                        />
+                      </div>
+                    </div>
+                  )}
                 </label>
               </div>
             </Card>

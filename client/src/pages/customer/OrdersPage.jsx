@@ -53,6 +53,16 @@ export default function OrdersPage() {
     return order.orderStatus === selectedStatus;
   });
 
+  const formatPaymentMethod = (order) => {
+    if (order.paymentMethod === 'UPI') {
+      return `📱 UPI (${order.paymentDetails?.upiId || 'Instant'})`;
+    }
+    if (order.paymentMethod === 'CARD') {
+      return `💳 Card (${order.paymentDetails?.cardNumberMasked || 'Credit/Debit'})`;
+    }
+    return '💵 Cash on Delivery (COD)';
+  };
+
   const handleOpenDetails = (order) => {
     setSelectedOrder(order);
     setIsModalOpen(true);
@@ -104,6 +114,9 @@ export default function OrdersPage() {
                     <span className="text-xs text-gray-400">Date: {new Date(order.createdAt).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-gray-600 bg-gray-100 px-2 py-0.5 rounded-md">
+                      {formatPaymentMethod(order)}
+                    </span>
                     <StatusBadge status={order.paymentStatus} />
                     <StatusBadge status={order.orderStatus} />
                   </div>
@@ -159,10 +172,11 @@ export default function OrdersPage() {
             maxWidth="max-w-2xl"
           >
             <div className="space-y-6">
-              <div className="flex items-center justify-between bg-gray-50 p-4 rounded-xl border">
+              <div className="flex flex-wrap items-center justify-between bg-gray-50 p-4 rounded-xl border gap-2">
                 <div>
                   <span className="text-xs text-gray-500 block">Placed On</span>
                   <strong className="text-sm text-gray-900">{new Date(selectedOrder.createdAt).toLocaleString()}</strong>
+                  <span className="text-xs text-amber-700 font-semibold block mt-1">Payment Method: {formatPaymentMethod(selectedOrder)}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <StatusBadge status={selectedOrder.paymentStatus} />
