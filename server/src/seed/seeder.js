@@ -96,7 +96,6 @@ const seedData = async () => {
       {
         name: 'Wooden Solar System 3D Map Puzzle',
         slug: 'wooden-solar-system-3d-map-puzzle',
-        slug: 'wooden-solar-system-3d-map-puzzle',
         sku: 'TN-1003',
         category: categories[2]._id,
         brand: 'EcoPlay',
