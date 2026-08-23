@@ -6,9 +6,11 @@ import Button from '../../components/common/Button';
 import LoadingState from '../../components/common/LoadingState';
 import ProductCard from '../../components/customer/ProductCard';
 import { productApi } from '../../services/api';
+import { useCart } from '../../context/CartContext';
 
 export default function ProductDetailsPage() {
   const { id } = useParams();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -47,22 +49,8 @@ export default function ProductDetailsPage() {
   }, [id]);
 
   const handleAddToCart = () => {
-    const existingCart = JSON.parse(localStorage.getItem('toynest_cart') || '[]');
-    const existingIdx = existingCart.findIndex((i) => i.productId === product._id);
-
-    if (existingIdx > -1) {
-      existingCart[existingIdx].quantity += quantity;
-    } else {
-      existingCart.push({
-        productId: product._id,
-        name: product.name,
-        thumbnailUrl: product.thumbnailUrl || selectedImage,
-        price: product.discountPrice > 0 ? product.discountPrice : product.price,
-        quantity,
-      });
-    }
-
-    localStorage.setItem('toynest_cart', JSON.stringify(existingCart));
+    if (!product) return;
+    addToCart(product, quantity);
     setAddedMessage('✨ Toy added to your cart successfully!');
     setTimeout(() => setAddedMessage(''), 3000);
   };

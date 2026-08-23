@@ -7,10 +7,12 @@ import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import { orderApi, cartApi } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { cartItems, clearCart } = useCart();
 
   const [fullName, setFullName] = useState(user?.name || '');
   const [phone, setPhone] = useState(user?.phone || '');
@@ -20,19 +22,15 @@ export default function CheckoutPage() {
   const [postalCode, setPostalCode] = useState('560001');
   const [paymentMethod, setPaymentMethod] = useState('COD');
 
-  const [cartItems, setCartItems] = useState([]);
   const [validationResult, setValidationResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const localCart = JSON.parse(localStorage.getItem('toynest_cart') || '[]');
-    setCartItems(localCart);
-
     async function loadCartSummary() {
-      if (localCart.length > 0) {
+      if (cartItems.length > 0) {
         try {
-          const payload = localCart.map((i) => ({ productId: i.productId, quantity: i.quantity }));
+          const payload = cartItems.map((i) => ({ productId: i.productId, quantity: i.quantity }));
           const res = await cartApi.validateCart(payload);
           if (res.success) setValidationResult(res.data);
         } catch (err) {
@@ -41,7 +39,7 @@ export default function CheckoutPage() {
       }
     }
     loadCartSummary();
-  }, []);
+  }, [cartItems]);
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -75,7 +73,7 @@ export default function CheckoutPage() {
 
       const res = await orderApi.createOrder(orderPayload);
       if (res.success) {
-        localStorage.removeItem('toynest_cart');
+        clearCart();
         navigate('/order-success', { state: { order: res.data } });
       }
     } catch (err) {

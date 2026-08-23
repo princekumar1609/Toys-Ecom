@@ -7,20 +7,16 @@ import Button from '../../components/common/Button';
 import LoadingState from '../../components/common/LoadingState';
 import EmptyState from '../../components/common/EmptyState';
 import { cartApi } from '../../services/api';
+import { useCart } from '../../context/CartContext';
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState([]);
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [validationResult, setValidationResult] = useState(null);
 
   const [isLoading, setIsLoading] = useState(true);
   const [couponError, setCouponError] = useState('');
-
-  useEffect(() => {
-    const localCart = JSON.parse(localStorage.getItem('toynest_cart') || '[]');
-    setCartItems(localCart);
-  }, []);
 
   useEffect(() => {
     async function validateCartServer() {
@@ -48,15 +44,11 @@ export default function CartPage() {
 
   const handleUpdateQuantity = (productId, newQty) => {
     if (newQty < 1) return;
-    const updated = cartItems.map((i) => (i.productId === productId ? { ...i, quantity: newQty } : i));
-    setCartItems(updated);
-    localStorage.setItem('toynest_cart', JSON.stringify(updated));
+    updateQuantity(productId, newQty);
   };
 
   const handleRemoveItem = (productId) => {
-    const updated = cartItems.filter((i) => i.productId !== productId);
-    setCartItems(updated);
-    localStorage.setItem('toynest_cart', JSON.stringify(updated));
+    removeFromCart(productId);
   };
 
   const handleApplyCoupon = async (e) => {

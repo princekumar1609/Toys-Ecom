@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../common/Card';
 import Badge from '../common/Badge';
 import Button from '../common/Button';
+import { useCart } from '../../context/CartContext';
 
 export default function ProductCard({ product, onAddToCart }) {
+  const { addToCart } = useCart();
+  const [isAdded, setIsAdded] = useState(false);
+
   const productId = product._id || product.id || product.slug;
   const categoryName = product.category?.name || product.categoryName || 'Toys';
   const discountPercent = product.discountPrice
     ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
     : 0;
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    if (onAddToCart) {
+      onAddToCart(product);
+    } else {
+      addToCart(product);
+    }
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 1500);
+  };
 
   return (
     <Card hoverEffect className="h-full flex flex-col group border border-gray-100 bg-white">
@@ -73,12 +88,12 @@ export default function ProductCard({ product, onAddToCart }) {
           </div>
 
           <Button
-            variant="primary"
+            variant={isAdded ? "secondary" : "primary"}
             size="sm"
-            className="w-full"
-            onClick={() => onAddToCart && onAddToCart(product)}
+            className="w-full transition-all duration-200"
+            onClick={handleAddToCart}
           >
-            🛒 Add to Cart
+            {isAdded ? '✓ Added!' : '🛒 Add to Cart'}
           </Button>
         </div>
       </div>
