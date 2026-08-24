@@ -315,7 +315,15 @@ export default function AdminProductsPage() {
       <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Add Toy To Inventory">
         <form onSubmit={handleAddSubmit} className="space-y-4 text-xs">
           <Input label="Toy Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
+            <Select
+              label="Category"
+              value={formData.category}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              options={categories.map((c) => ({ value: c._id, label: c.name }))}
+              placeholder="Select Category"
+              required
+            />
             <Input label="SKU" value={formData.sku} onChange={(e) => setFormData({ ...formData, sku: e.target.value })} required />
             <Input label="Brand" value={formData.brand} onChange={(e) => setFormData({ ...formData, brand: e.target.value })} required />
           </div>
@@ -323,6 +331,20 @@ export default function AdminProductsPage() {
             <Input label="Price (₹)" type="number" value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })} required />
             <Input label="Discount Price (₹)" type="number" value={formData.discountPrice} onChange={(e) => setFormData({ ...formData, discountPrice: e.target.value })} />
             <Input label="Stock Units" type="number" value={formData.stock} onChange={(e) => setFormData({ ...formData, stock: e.target.value })} required />
+          </div>
+
+          <div className="w-full flex flex-col gap-1.5">
+            <label className="text-xs font-medium text-gray-700 flex items-center gap-1">
+              Description <span className="text-red-500">*</span>
+            </label>
+            <textarea
+              rows={3}
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              placeholder="Enter product description, key features, material, safety info..."
+              className="w-full px-3.5 py-2 text-xs bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent hover:border-gray-400 text-gray-900 resize-y transition-all"
+              required
+            />
           </div>
 
           {/* DYNAMIC MULTIPLE IMAGE URLS */}
@@ -374,9 +396,35 @@ export default function AdminProductsPage() {
           <form onSubmit={handleEditSubmit} className="space-y-4 text-xs">
             <Input label="Toy Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
             <div className="grid grid-cols-3 gap-3">
+              <Select
+                label="Category"
+                value={formData.category}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                options={categories.map((c) => ({ value: c._id, label: c.name }))}
+                placeholder="Select Category"
+                required
+              />
+              <Input label="SKU" value={formData.sku} onChange={(e) => setFormData({ ...formData, sku: e.target.value })} required />
+              <Input label="Brand" value={formData.brand} onChange={(e) => setFormData({ ...formData, brand: e.target.value })} required />
+            </div>
+            <div className="grid grid-cols-3 gap-3">
               <Input label="Price (₹)" type="number" value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })} required />
               <Input label="Discount Price (₹)" type="number" value={formData.discountPrice} onChange={(e) => setFormData({ ...formData, discountPrice: e.target.value })} />
               <Input label="Stock Units" type="number" value={formData.stock} onChange={(e) => setFormData({ ...formData, stock: e.target.value })} required />
+            </div>
+
+            <div className="w-full flex flex-col gap-1.5">
+              <label className="text-xs font-medium text-gray-700 flex items-center gap-1">
+                Description <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                rows={3}
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                placeholder="Enter product description..."
+                className="w-full px-3.5 py-2 text-xs bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent hover:border-gray-400 text-gray-900 resize-y transition-all"
+                required
+              />
             </div>
 
             {/* DYNAMIC MULTIPLE IMAGE URLS */}
