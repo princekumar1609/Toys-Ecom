@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../common/Modal';
 import Input from '../common/Input';
 import Button from '../common/Button';
+import { useAuth } from '../../context/AuthContext';
 
 export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
+  const navigate = useNavigate();
+  const { login, register } = useAuth();
   const [activeTab, setActiveTab] = useState(initialTab); // 'login', 'register', 'forgot'
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +26,7 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
 
   const [forgotEmail, setForgotEmail] = useState('');
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage('');
     if (!loginEmail || !loginPassword) {
@@ -30,17 +34,20 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
       return;
     }
     setIsLoading(true);
-    setTimeout(() => {
+    try {
+      const res = await login(loginEmail, loginPassword);
+      onClose();
+      if (res?.data?.role === 'ADMIN') {
+        navigate('/admin/dashboard');
+      }
+    } catch (err) {
+      setErrorMessage(err.message || 'Authentication failed.');
+    } finally {
       setIsLoading(false);
-      setSuccessMessage('Successfully signed in! (UI Simulation)');
-      setTimeout(() => {
-        setSuccessMessage('');
-        onClose();
-      }, 1500);
-    }, 1000);
+    }
   };
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage('');
     if (regPassword !== regConfirmPassword) {
@@ -48,14 +55,18 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
       return;
     }
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setSuccessMessage('Account created successfully! (UI Simulation)');
+    try {
+      await register(regName, regEmail, regPassword, regPhone);
+      setSuccessMessage('Account created successfully!');
       setTimeout(() => {
         setSuccessMessage('');
-        setActiveTab('login');
-      }, 1500);
-    }, 1000);
+        onClose();
+      }, 1000);
+    } catch (err) {
+      setErrorMessage(err.message || 'Registration failed.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleForgotSubmit = (e) => {

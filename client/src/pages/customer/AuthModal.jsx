@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../../components/common/Modal';
 import Input from '../../components/common/Input';
 import Button from '../../components/common/Button';
 import { useAuth } from '../../context/AuthContext';
 
 export default function AuthModal({ isOpen, onClose }) {
+  const navigate = useNavigate();
   const { login, register } = useAuth();
   const [mode, setMode] = useState('login'); // 'login' or 'register'
   const [name, setName] = useState('');
@@ -40,11 +42,15 @@ export default function AuthModal({ isOpen, onClose }) {
 
     try {
       if (mode === 'login') {
-        await login(email, password);
+        const res = await login(email, password);
+        handleClose();
+        if (res?.data?.role === 'ADMIN') {
+          navigate('/admin/dashboard');
+        }
       } else {
         await register(name, email, password, phone);
+        handleClose();
       }
-      handleClose();
     } catch (err) {
       setErrorMessage(err.message || 'Authentication failed. Please check your details.');
     } finally {

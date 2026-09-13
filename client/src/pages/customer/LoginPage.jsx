@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Container from '../../components/common/Container';
 import Breadcrumb from '../../components/common/Breadcrumb';
@@ -9,7 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login, register } = useAuth();
+  const { user, login, register } = useAuth();
 
   const [mode, setMode] = useState('login'); // 'login' or 'register'
   const [name, setName] = useState('');
@@ -20,6 +20,16 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  useEffect(() => {
+    if (user) {
+      if (user.role === 'ADMIN') {
+        navigate('/admin/dashboard', { replace: true });
+      } else {
+        navigate('/', { replace: true });
+      }
+    }
+  }, [user, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage('');
@@ -27,8 +37,12 @@ export default function LoginPage() {
 
     try {
       if (mode === 'login') {
-        await login(email, password);
-        navigate('/');
+        const res = await login(email, password);
+        if (res?.data?.role === 'ADMIN') {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/');
+        }
       } else {
         await register(name, email, password, phone);
         navigate('/');
