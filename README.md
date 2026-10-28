@@ -1,4 +1,4 @@
-# Toys Ecom — Antigravity Master Development Plan
+# Toys Ecom 
 
 ## Purpose
 
