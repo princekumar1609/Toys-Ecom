@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 import StatusBadge from '../../components/common/StatusBadge';
 import LoadingState from '../../components/common/LoadingState';
@@ -34,7 +33,7 @@ export default function AdminDashboardPage() {
   }, []);
 
   if (isLoading) {
-    return <LoadingState message="Loading business performance analytics..." className="py-20" />;
+    return <LoadingState text="Loading analytics..." className="py-24" />;
   }
 
   const totalRevenue = orders.reduce((sum, o) => sum + (o.grandTotal || 0), 0);
@@ -42,34 +41,36 @@ export default function AdminDashboardPage() {
   const lowStockItems = products.filter((p) => p.stock < 10);
 
   const metrics = [
-    { title: 'Total Revenue', value: `₹${totalRevenue}`, change: 'Live DB', icon: '💰', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-    { title: 'Total Orders', value: `${orders.length}`, change: 'Total Placed', icon: '📦', color: 'bg-indigo-50 text-indigo-700 border-indigo-200' },
-    { title: 'Active Products', value: `${products.length}`, change: 'In Catalog', icon: '🎁', color: 'bg-amber-50 text-amber-700 border-amber-200' },
-    { title: 'Registered Customers', value: `${customersCount}`, change: 'Active Accounts', icon: '👥', color: 'bg-blue-50 text-blue-700 border-blue-200' },
-    { title: 'Pending Orders', value: `${pendingCount}`, change: 'Requires Action', icon: '⏳', color: 'bg-rose-50 text-rose-700 border-rose-200' },
-    { title: 'Low Stock Alerts', value: `${lowStockItems.length}`, change: '< 10 units left', icon: '⚠️', color: 'bg-orange-50 text-orange-700 border-orange-200' },
+    { title: 'Total Revenue', value: `₹${totalRevenue}`, note: 'Live Inflow' },
+    { title: 'Total Orders', value: `${orders.length}`, note: 'Fulfilled & Active' },
+    { title: 'Catalog Items', value: `${products.length}`, note: 'Active SKUs' },
+    { title: 'Registered Clients', value: `${customersCount}`, note: 'Customer Base' },
+    { title: 'Pending Shipments', value: `${pendingCount}`, note: 'Requires Action' },
+    { title: 'Low Stock Alerts', value: `${lowStockItems.length}`, note: '< 10 units left' },
   ];
 
   return (
     <div className="space-y-8">
-      {/* DASHBOARD HEADER & QUICK ACTIONS */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      {/* DASHBOARD HEADER */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#E8E4DC]">
         <div>
-          <h1 className="text-2xl font-extrabold text-gray-900 font-display">
-            Business Dashboard 📊
+          <span className="text-[10px] uppercase tracking-widest font-semibold text-[#77766F] block mb-1">
+            Performance &amp; Inventory
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-display font-medium text-[#292A26]">
+            Storefront Analytics &amp; Operations
           </h1>
-          <p className="text-xs text-gray-500 mt-1">Real-time REST API e-commerce performance indicators &amp; inventory alerts.</p>
         </div>
 
         <div className="flex items-center gap-3">
           <Link to="/admin/products">
             <Button variant="primary" size="sm">
-              + Add Product
+              + New Product
             </Button>
           </Link>
           <Link to="/admin/orders">
             <Button variant="outline" size="sm">
-              View All Orders
+              All Orders
             </Button>
           </Link>
         </div>
@@ -78,86 +79,89 @@ export default function AdminDashboardPage() {
       {/* KPI METRICS GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         {metrics.map((m, idx) => (
-          <Card key={idx} className={`p-4 border ${m.color} shadow-xs space-y-2`}>
+          <div key={idx} className="p-5 bg-white border border-[#E8E4DC] rounded-lg space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-2xl">{m.icon}</span>
-              <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-white/80 border border-current">
-                {m.change}
+              <span className="text-[10px] uppercase tracking-wider font-semibold text-[#77766F]">
+                {m.title}
               </span>
             </div>
             <div>
-              <span className="text-xs text-gray-500 font-medium block">{m.title}</span>
-              <span className="text-xl font-extrabold text-gray-900 font-display block">{m.value}</span>
+              <span className="text-2xl font-display font-medium text-[#292A26] block">
+                {m.value}
+              </span>
+              <span className="text-[11px] text-[#A8B5A0] font-medium block mt-0.5">
+                {m.note}
+              </span>
             </div>
-          </Card>
+          </div>
         ))}
       </div>
 
       {/* TWO COLUMN GRID: RECENT ORDERS STREAM & LOW STOCK ALERTS */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Orders Stream Table */}
-        <Card className="lg:col-span-2 p-6 border border-gray-200 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-gray-100 pb-3">
-            <h3 className="font-bold text-gray-900 text-base">Recent Live Orders Stream</h3>
-            <Link to="/admin/orders" className="text-xs font-semibold text-amber-600 hover:underline">
+        <div className="lg:col-span-2 p-6 bg-white border border-[#E8E4DC] rounded-lg space-y-4">
+          <div className="flex items-center justify-between border-b border-[#E8E4DC] pb-3">
+            <h3 className="font-display font-medium text-lg text-[#292A26]">Recent Orders Stream</h3>
+            <Link to="/admin/orders" className="text-xs uppercase tracking-wider font-semibold text-[#292A26] hover:text-[#C98268]">
               View All Orders →
             </Link>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-gray-50 border-b border-gray-200 text-gray-500 font-semibold uppercase">
+              <thead className="bg-[#FAF8F3] border-b border-[#E8E4DC] text-[#77766F] font-medium uppercase tracking-wider text-[11px]">
                 <tr>
-                  <th className="py-2.5 px-3">Order ID</th>
-                  <th className="py-2.5 px-3">Customer</th>
-                  <th className="py-2.5 px-3">Total</th>
-                  <th className="py-2.5 px-3">Status</th>
-                  <th className="py-2.5 px-3">Date</th>
+                  <th className="py-3 px-3">Order ID</th>
+                  <th className="py-3 px-3">Customer</th>
+                  <th className="py-3 px-3">Amount</th>
+                  <th className="py-3 px-3">Status</th>
+                  <th className="py-3 px-3">Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100 text-gray-700">
+              <tbody className="divide-y divide-[#E8E4DC] text-[#292A26]">
                 {orders.map((ord) => (
-                  <tr key={ord._id} className="hover:bg-gray-50">
-                    <td className="py-3 px-3 font-bold font-mono text-gray-900">#{ord.orderNumber}</td>
-                    <td className="py-3 px-3 font-medium">{ord.customer?.name || 'Customer'}</td>
-                    <td className="py-3 px-3 font-bold text-gray-900">₹{ord.grandTotal}</td>
+                  <tr key={ord._id} className="hover:bg-[#FAF8F3] transition-colors">
+                    <td className="py-3 px-3 font-mono font-medium">#{ord.orderNumber}</td>
+                    <td className="py-3 px-3">{ord.customer?.name || 'Customer'}</td>
+                    <td className="py-3 px-3 font-semibold">₹{ord.grandTotal}</td>
                     <td className="py-3 px-3"><StatusBadge status={ord.orderStatus} /></td>
-                    <td className="py-3 px-3 text-gray-400 text-[11px]">{new Date(ord.createdAt).toLocaleDateString()}</td>
+                    <td className="py-3 px-3 text-[#77766F] text-[11px]">{new Date(ord.createdAt).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </Card>
+        </div>
 
         {/* Low Stock Alerts */}
-        <Card className="p-6 border border-gray-200 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-gray-100 pb-3">
-            <h3 className="font-bold text-gray-900 text-base flex items-center gap-1.5">
-              <span>⚠️ Low Stock Alerts</span>
-            </h3>
-            <span className="text-xs text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded">Restock Urgently</span>
+        <div className="p-6 bg-white border border-[#E8E4DC] rounded-lg space-y-4">
+          <div className="flex items-center justify-between border-b border-[#E8E4DC] pb-3">
+            <h3 className="font-display font-medium text-lg text-[#292A26]">Inventory Alerts</h3>
+            <span className="text-[10px] uppercase tracking-wider font-semibold text-[#A35338] bg-[#C98268]/15 px-2 py-0.5 rounded-sm">
+              Restock Priority
+            </span>
           </div>
 
           <div className="space-y-3">
             {lowStockItems.slice(0, 4).map((item) => (
-              <div key={item._id} className="p-3 bg-gray-50 rounded-xl border border-gray-200 flex items-center justify-between gap-3 text-xs">
+              <div key={item._id} className="p-3 bg-[#FAF8F3] rounded-md border border-[#E8E4DC] flex items-center justify-between gap-3 text-xs">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <img src={item.thumbnailUrl} alt={item.name} className="w-10 h-10 object-cover rounded-lg border flex-shrink-0" />
+                  <img src={item.thumbnailUrl} alt={item.name} className="w-10 h-10 object-cover rounded-sm bg-white border border-[#E8E4DC] flex-shrink-0" />
                   <div className="min-w-0">
-                    <h4 className="font-semibold text-gray-900 truncate">{item.name}</h4>
-                    <span className="text-rose-600 font-bold block">Only {item.stock} left</span>
+                    <h4 className="font-medium text-[#292A26] truncate">{item.name}</h4>
+                    <span className="text-[#C98268] text-[11px] font-semibold block">{item.stock} left in stock</span>
                   </div>
                 </div>
                 <Link to="/admin/products">
                   <Button variant="outline" size="sm" className="text-[10px] px-2 py-1">
-                    Restock
+                    Manage
                   </Button>
                 </Link>
               </div>
             ))}
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   );

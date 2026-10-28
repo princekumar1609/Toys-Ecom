@@ -84,29 +84,31 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} maxWidth="max-w-md">
       <div className="space-y-6">
-        {/* Header Tabs */}
+        {/* Header Branding */}
         <div className="text-center space-y-2">
-          <div className="text-4xl">🧸</div>
-          <h2 className="text-2xl font-bold font-display text-gray-900">
-            {activeTab === 'login' && 'Welcome Back to ToyNest'}
-            {activeTab === 'register' && 'Create Your ToyNest Account'}
+          <div className="w-10 h-10 rounded-sm bg-[#292A26] text-[#FAF8F3] flex items-center justify-center font-display text-base font-semibold mx-auto">
+            TE
+          </div>
+          <h2 className="text-2xl font-display font-medium text-[#292A26]">
+            {activeTab === 'login' && 'Welcome to Toys Ecom'}
+            {activeTab === 'register' && 'Create Your Account'}
             {activeTab === 'forgot' && 'Reset Your Password'}
           </h2>
-          <p className="text-xs text-gray-500">
-            {activeTab === 'login' && 'Sign in to access your orders and wishlist.'}
-            {activeTab === 'register' && 'Join thousands of happy parents and toy lovers.'}
-            {activeTab === 'forgot' && 'Enter your registered email to receive a reset link.'}
+          <p className="text-xs text-[#77766F] leading-relaxed">
+            {activeTab === 'login' && 'Sign in to access your orders and saved collections.'}
+            {activeTab === 'register' && 'Join our conscious parenting and play community.'}
+            {activeTab === 'forgot' && 'Enter your registered email to receive a recovery link.'}
           </p>
         </div>
 
         {/* Tab Switcher Buttons */}
         {activeTab !== 'forgot' && (
-          <div className="flex border-b border-gray-200">
+          <div className="flex border-b border-[#E8E4DC]">
             <button
               type="button"
               onClick={() => { setActiveTab('login'); setErrorMessage(''); setSuccessMessage(''); }}
-              className={`flex-1 pb-2.5 font-bold text-xs uppercase tracking-wider text-center border-b-2 transition-all ${
-                activeTab === 'login' ? 'border-amber-500 text-amber-600' : 'border-transparent text-gray-400 hover:text-gray-600'
+              className={`flex-1 pb-2.5 font-medium text-xs uppercase tracking-wider text-center border-b-2 transition-all cursor-pointer ${
+                activeTab === 'login' ? 'border-[#292A26] text-[#292A26]' : 'border-transparent text-[#77766F] hover:text-[#292A26]'
               }`}
             >
               Sign In
@@ -114,24 +116,24 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
             <button
               type="button"
               onClick={() => { setActiveTab('register'); setErrorMessage(''); setSuccessMessage(''); }}
-              className={`flex-1 pb-2.5 font-bold text-xs uppercase tracking-wider text-center border-b-2 transition-all ${
-                activeTab === 'register' ? 'border-amber-500 text-amber-600' : 'border-transparent text-gray-400 hover:text-gray-600'
+              className={`flex-1 pb-2.5 font-medium text-xs uppercase tracking-wider text-center border-b-2 transition-all cursor-pointer ${
+                activeTab === 'register' ? 'border-[#292A26] text-[#292A26]' : 'border-transparent text-[#77766F] hover:text-[#292A26]'
               }`}
             >
-              Register
+              Create Account
             </button>
           </div>
         )}
 
         {/* Alert Banners */}
         {errorMessage && (
-          <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg font-medium">
-            ⚠️ {errorMessage}
+          <div className="p-3 bg-[#C98268]/10 border border-[#C98268]/30 text-[#A35338] text-xs rounded-md font-medium">
+            {errorMessage}
           </div>
         )}
         {successMessage && (
-          <div className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-lg font-semibold text-center">
-            ✨ {successMessage}
+          <div className="p-3 bg-[#A8B5A0]/20 border border-[#A8B5A0]/40 text-[#3B5135] text-xs rounded-md font-medium text-center">
+            {successMessage}
           </div>
         )}
 
@@ -147,15 +149,15 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
               required
             />
 
-            <div className="space-y-1">
+            <div className="space-y-1.5">
               <div className="flex justify-between items-center">
-                <label className="text-sm font-medium text-gray-700">Password</label>
+                <label className="text-xs font-medium text-[#292A26]">Password</label>
                 <button
                   type="button"
                   onClick={() => { setActiveTab('forgot'); setErrorMessage(''); setSuccessMessage(''); }}
-                  className="text-xs font-semibold text-amber-600 hover:underline"
+                  className="text-xs text-[#77766F] hover:text-[#292A26] transition-colors"
                 >
-                  Forgot Password?
+                  Forgot password?
                 </button>
               </div>
               <div className="relative">
@@ -164,20 +166,20 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
                   placeholder="••••••••"
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
-                  className="w-full px-3.5 py-2 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 pr-10"
+                  className="w-full px-3.5 py-2.5 text-sm bg-white border border-[#E8E4DC] rounded-md text-[#292A26] placeholder:text-[#77766F]/60 focus:outline-none focus:border-[#292A26] focus:ring-1 focus:ring-[#292A26] pr-10"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs hover:text-gray-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#77766F] text-xs hover:text-[#292A26]"
                 >
                   {showPassword ? 'Hide' : 'Show'}
                 </button>
               </div>
             </div>
 
-            <Button type="submit" variant="primary" className="w-full" isLoading={isLoading}>
+            <Button type="submit" variant="primary" size="md" className="w-full mt-2" isLoading={isLoading}>
               Sign In To Account
             </Button>
           </form>
@@ -185,10 +187,10 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
 
         {/* TAB 2: REGISTER FORM */}
         {activeTab === 'register' && (
-          <form onSubmit={handleRegisterSubmit} className="space-y-3">
+          <form onSubmit={handleRegisterSubmit} className="space-y-3.5">
             <Input
               label="Full Name"
-              placeholder="John Doe"
+              placeholder="E.g. Sophia Lindqvist"
               value={regName}
               onChange={(e) => setRegName(e.target.value)}
               required
@@ -225,7 +227,7 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
               required
             />
 
-            <Button type="submit" variant="primary" className="w-full mt-2" isLoading={isLoading}>
+            <Button type="submit" variant="primary" size="md" className="w-full mt-2" isLoading={isLoading}>
               Create New Account
             </Button>
           </form>
@@ -242,13 +244,13 @@ export default function AuthModal({ isOpen, onClose, initialTab = 'login' }) {
               onChange={(e) => setForgotEmail(e.target.value)}
               required
             />
-            <Button type="submit" variant="primary" className="w-full" isLoading={isLoading}>
+            <Button type="submit" variant="primary" size="md" className="w-full" isLoading={isLoading}>
               Send Reset Link
             </Button>
             <button
               type="button"
               onClick={() => { setActiveTab('login'); setErrorMessage(''); setSuccessMessage(''); }}
-              className="w-full text-center text-xs font-semibold text-gray-500 hover:text-amber-600"
+              className="w-full text-center text-xs text-[#77766F] hover:text-[#292A26] transition-colors"
             >
               ← Back to Sign In
             </button>

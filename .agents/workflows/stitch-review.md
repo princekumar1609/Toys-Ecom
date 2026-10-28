@@ -3,7 +3,7 @@
 This workflow outlines the comparison process for ensuring implemented frontend components match the approved Stitch design.
 
 ## Purpose
-The Stitch design system and screen compositions serve as the single source of truth for the ToyNest visual interface.
+The Stitch design system and screen compositions serve as the single source of truth for the Toys Ecom visual interface.
 
 ## Review Steps
 

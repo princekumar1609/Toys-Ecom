@@ -185,7 +185,7 @@ export const MOCK_TESTIMONIALS = [
     role: 'Mother of two',
     avatar: '👩',
     rating: 5,
-    comment: 'ToyNest has been a lifesaver! The toys are non-toxic, super durable, and my kids absolutely adore the space lego set.'
+    comment: 'Toys Ecom has been a lifesaver! The toys are non-toxic, super durable, and my kids absolutely adore the space lego set.'
   },
   {
     id: 2,

@@ -1,7 +1,8 @@
+const path = require('path');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const User = require('../models/User');
 const Category = require('../models/Category');
@@ -23,8 +24,8 @@ const seedData = async () => {
 
     console.log('Creating initial Admin Account...');
     const adminUser = await User.create({
-      name: 'ToyNest Administrator',
-      email: 'admin@toynest.com',
+      name: 'Toys Ecom Administrator',
+      email: 'admin@toysecom.com',
       password: 'admin123456',
       phone: '+91 1800 869 6378',
       role: 'ADMIN',
@@ -32,7 +33,7 @@ const seedData = async () => {
       addresses: [
         {
           label: 'Headquarters',
-          fullName: 'ToyNest Retail Pvt Ltd',
+          fullName: 'Toys Ecom Retail Pvt Ltd',
           phone: '+91 1800 869 6378',
           street: 'MG Road',
           city: 'Bengaluru',
@@ -133,7 +134,7 @@ const seedData = async () => {
       },
     ]);
 
-    console.log('✨ ToyNest Database Seeding Completed Successfully!');
+    console.log('✨ Toys Ecom Database Seeding Completed Successfully!');
     process.exit(0);
   } catch (error) {
     console.error('❌ Seeding Error:', error.message);

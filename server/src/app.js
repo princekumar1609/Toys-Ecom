@@ -78,7 +78,7 @@ app.use('/api/contact', contactRoutes);
 // Root route
 app.get('/', (req, res) => {
   res.json({
-    message: 'Welcome to ToyNest E-Commerce REST API',
+    message: 'Welcome to Toys Ecom E-Commerce REST API',
     healthCheck: '/api/health'
   });
 });

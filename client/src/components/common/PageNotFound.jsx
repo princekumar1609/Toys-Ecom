@@ -1,13 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import Button from './Button';
 
 export default function PageNotFound() {
-    return (
-        <div className="flex items-center justify-center h-screen bg-gray-50 text-gray-900 font-sans antialiased min-h-screen">
-            <div className="text-center">
-                <h1 className="text-9xl font-bold text-blue-600">404</h1>
-                <h2 className="text-2xl font-bold text-gray-900">Page Not Found</h2>
-                <p className="text-gray-600">The page you are looking for does not exist.</p>
-            </div>
+  return (
+    <div className="flex items-center justify-center min-h-[70vh] bg-[#FAF8F3] text-[#292A26] px-4 py-16">
+      <div className="text-center max-w-md space-y-4">
+        <h1 className="text-7xl sm:text-8xl font-display font-light text-[#77766F]/40 tracking-tight">404</h1>
+        <h2 className="text-2xl sm:text-3xl font-display font-medium text-[#292A26]">Page Not Found</h2>
+        <p className="text-xs sm:text-sm text-[#77766F] leading-relaxed">
+          The page you are looking for does not exist, has been removed, or is temporarily unavailable.
+        </p>
+        <div className="pt-4">
+          <Link to="/">
+            <Button variant="primary" size="md">
+              Return To Storefront →
+            </Button>
+          </Link>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

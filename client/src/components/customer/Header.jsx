@@ -6,58 +6,77 @@ import AuthModal from '../../pages/customer/AuthModal';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 
-export default function Header() {
+export default function Header({ onOpenMobileMenu }) {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { user, logout } = useAuth();
   const { cartCount } = useCart();
   const navigate = useNavigate();
 
+  const handleOpenMenu = () => {
+    if (onOpenMobileMenu) {
+      onOpenMobileMenu();
+    } else {
+      setIsMobileNavOpen(true);
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-2xs transition-all">
+    <header className="sticky top-0 z-40 bg-[#FAF8F3]/95 backdrop-blur-md border-b border-[#E8E4DC] transition-all">
       {/* TOP ANNOUNCEMENT BAR */}
-      <div className="bg-amber-500 text-white text-[11px] font-semibold py-1.5 px-4 text-center tracking-wide">
-        🎉 Free Delivery across India on orders over ₹1,999! Use coupon <span className="underline font-bold">SUMMER30</span> for 30% OFF!
+      <div className="bg-[#F1EEE7] text-[#292A26] border-b border-[#E8E4DC] text-[11px] font-medium py-2 px-4 text-center tracking-wider uppercase">
+        Free Delivery across India on orders over ₹1,999 • Code <span className="font-semibold underline decoration-[#C98268] text-[#C98268]">SUMMER30</span> for 30% OFF
       </div>
 
       <Container>
-        <div className="flex items-center justify-between h-16 sm:h-20 gap-4">
+        <div className="flex items-center justify-between h-18 sm:h-20 gap-4">
           {/* BRAND LOGO */}
-          <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
-            <div className="w-10 h-10 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-xl font-bold shadow-md group-hover:scale-105 transition-transform">
-              🧸
+          <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
+            <div className="w-8 h-8 rounded-sm bg-[#292A26] text-[#FAF8F3] flex items-center justify-center font-display text-sm font-semibold tracking-tight transition-transform group-hover:scale-105">
+              TE
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-xl sm:text-2xl text-gray-900 leading-none tracking-tight">
-                Toy<span className="text-amber-500">Nest</span>
+              <span className="font-display font-medium text-xl sm:text-2xl text-[#292A26] leading-none tracking-tight">
+                Toys <span className="font-light italic text-[#77766F]">Ecom</span>
               </span>
-              <span className="text-[9px] font-semibold uppercase tracking-widest text-gray-400 leading-none mt-0.5">
-                Joyful Learning &amp; Play
+              <span className="text-[9px] font-medium uppercase tracking-[0.22em] text-[#77766F] leading-none mt-1">
+                Conscious Play &amp; Design
               </span>
             </div>
           </Link>
 
           {/* DESKTOP NAVIGATION LINKS */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-700">
-            <Link to="/" className="hover:text-amber-500 transition-colors">Home</Link>
-            <Link to="/shop" className="hover:text-amber-500 transition-colors">Shop Toys</Link>
-            <Link to="/about" className="hover:text-amber-500 transition-colors">About Us</Link>
-            <Link to="/contact" className="hover:text-amber-500 transition-colors">Contact</Link>
+          <nav className="hidden md:flex items-center gap-8 text-xs uppercase tracking-widest font-medium text-[#77766F]">
+            <Link to="/" className="hover:text-[#292A26] transition-colors py-1">Home</Link>
+            <Link to="/shop" className="hover:text-[#292A26] transition-colors py-1">Shop Toys</Link>
+            <Link to="/about" className="hover:text-[#292A26] transition-colors py-1">About</Link>
+            <Link to="/contact" className="hover:text-[#292A26] transition-colors py-1">Contact</Link>
           </nav>
 
           {/* RIGHT ACTION BUTTONS */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Search Link */}
+            <Link
+              to="/shop"
+              className="p-2 text-[#292A26] hover:text-[#45463F] hover:bg-[#F1EEE7] rounded-md transition-colors"
+              aria-label="Search Catalog"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </Link>
+
             {/* Shopping Cart Trigger */}
             <Link
               to="/cart"
-              className="relative p-2 text-gray-700 hover:text-amber-500 hover:bg-amber-50 rounded-xl transition-all"
+              className="relative p-2 text-[#292A26] hover:text-[#45463F] hover:bg-[#F1EEE7] rounded-md transition-all"
               aria-label="Shopping Cart"
             >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-amber-500 text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-xs">
+                <span className="absolute 0 top-0.5 right-0.5 bg-[#292A26] text-white text-[9px] font-semibold w-4 h-4 rounded-full flex items-center justify-center">
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
@@ -68,17 +87,17 @@ export default function Header() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/orders"
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-bold hover:bg-amber-100 transition-colors"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#F1EEE7] border border-[#E8E4DC] text-[#292A26] text-xs font-medium hover:bg-[#E8E4DC]/60 transition-colors"
                 >
-                  <span className="w-6 h-6 rounded-full bg-amber-500 text-white font-bold flex items-center justify-center text-[10px]">
-                    {user.name.charAt(0)}
+                  <span className="w-5 h-5 rounded-full bg-[#292A26] text-white font-semibold flex items-center justify-center text-[10px]">
+                    {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </span>
-                  <span className="hidden sm:inline line-clamp-1 max-w-[100px]">{user.name}</span>
+                  <span className="hidden sm:inline line-clamp-1 max-w-[100px] text-xs">{user.name}</span>
                 </Link>
                 <button
                   type="button"
                   onClick={logout}
-                  className="text-xs font-semibold text-rose-500 hover:text-rose-700 px-2 py-1"
+                  className="text-xs uppercase tracking-wider font-medium text-[#77766F] hover:text-[#C98268] px-2 py-1 transition-colors"
                   title="Sign Out"
                 >
                   Logout
@@ -88,9 +107,11 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsAuthModalOpen(true)}
-                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl bg-amber-500 text-white text-xs font-bold hover:bg-amber-600 shadow-sm transition-all"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md border border-[#292A26] text-[#292A26] text-xs uppercase tracking-wider font-semibold hover:bg-[#292A26] hover:text-white transition-all cursor-pointer"
               >
-                <span>👤</span>
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
                 <span>Sign In</span>
               </button>
             )}
@@ -98,12 +119,12 @@ export default function Header() {
             {/* Mobile Hamburger Toggle */}
             <button
               type="button"
-              onClick={() => setIsMobileNavOpen(true)}
-              className="md:hidden p-2 text-gray-700 hover:text-amber-500 rounded-xl hover:bg-gray-100"
+              onClick={handleOpenMenu}
+              className="md:hidden p-2 text-[#292A26] hover:bg-[#F1EEE7] rounded-md transition-colors"
               aria-label="Open Navigation Menu"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
           </div>

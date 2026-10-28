@@ -1,4 +1,4 @@
-# ToyNest REST API Blueprint (`API.md`)
+# Toys Ecom REST API Blueprint (`API.md`)
 
 ## 1. Overview & General Standards
 All API endpoints are hosted under `/api`. All request and response bodies use JSON encoding.
@@ -60,7 +60,7 @@ All API endpoints are hosted under `/api`. All request and response bodies use J
 | Method | Endpoint | Access | Description |
 | :--- | :--- | :--- | :--- |
 | `POST` | `/api/cart/validate` | Public | Validate cart items, verify database prices & stock, calculate totals |
-| `POST` | `/api/cart/coupon` | Public | Validate promo coupon codes (`SUMMER30`, `TOYNESTFREE`) |
+| `POST` | `/api/cart/coupon` | Public | Validate promo coupon codes (`SUMMER30`, `TOYSECOMFREE`, `TOYNESTFREE`) |
 
 ---
 

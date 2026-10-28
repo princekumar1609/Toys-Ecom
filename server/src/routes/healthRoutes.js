@@ -15,7 +15,7 @@ router.get('/health', (req, res) => {
 
   res.status(200).json({
     success: true,
-    message: 'ToyNest API is healthy and running',
+    message: 'Toys Ecom API is healthy and running',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
     database: {

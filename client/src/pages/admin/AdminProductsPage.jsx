@@ -89,9 +89,9 @@ export default function AdminProductsPage() {
   const handleOpenAddModal = () => {
     setFormData({
       name: '',
-      sku: `TN-${Math.floor(1000 + Math.random() * 9000)}`,
+      sku: `TE-${Math.floor(1000 + Math.random() * 9000)}`,
       category: categories[0]?._id || '',
-      brand: 'ToyNest',
+      brand: 'Toys Ecom',
       price: '1499',
       discountPrice: '1299',
       stock: '25',
@@ -209,12 +209,15 @@ export default function AdminProductsPage() {
   return (
     <div className="space-y-6">
       {/* HEADER & ADD BUTTON */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#E8E4DC]">
         <div>
-          <h1 className="text-2xl font-extrabold text-gray-900 font-display">
-            Product Inventory Management 🎁
+          <span className="text-[10px] uppercase tracking-widest font-semibold text-[#77766F] block mb-1">
+            Catalog Inventory
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-display font-medium text-[#292A26]">
+            Product Catalog Management
           </h1>
-          <p className="text-xs text-gray-500 mt-1">Live REST API database CRUD operations for toy inventory.</p>
+          <p className="text-xs text-[#77766F] mt-1">Manage catalog pieces, gallery imagery, stock reserves, and pricing.</p>
         </div>
 
         <Button variant="primary" size="md" onClick={handleOpenAddModal}>
@@ -280,7 +283,7 @@ export default function AdminProductsPage() {
                     </td>
                     <td className="py-3 px-4">
                       <span className="font-bold font-mono text-gray-900 block">{p.sku}</span>
-                      <span className="text-[11px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded font-medium">{p.category?.name || 'Toys'}</span>
+                      <span className="text-[10px] uppercase tracking-wider text-[#77766F] bg-[#FAF8F3] border border-[#E8E4DC] px-2 py-0.5 rounded-sm font-medium">{p.category?.name || 'Toys'}</span>
                     </td>
                     <td className="py-3 px-4">
                       <span className="font-bold text-gray-900 block">₹{p.discountPrice || p.price}</span>
@@ -354,7 +357,7 @@ export default function AdminProductsPage() {
               <button
                 type="button"
                 onClick={handleAddImageUrl}
-                className="text-amber-600 hover:text-amber-700 text-xs font-bold flex items-center gap-1 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200"
+                className="text-[#292A26] hover:bg-[#F1EEE7] text-xs font-medium flex items-center gap-1 bg-[#FAF8F3] px-2.5 py-1 rounded-md border border-[#E8E4DC]"
               >
                 <span>+ Add Image URL</span>
               </button>
@@ -434,7 +437,7 @@ export default function AdminProductsPage() {
                 <button
                   type="button"
                   onClick={handleAddImageUrl}
-                  className="text-amber-600 hover:text-amber-700 text-xs font-bold flex items-center gap-1 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200"
+                  className="text-[#292A26] hover:bg-[#F1EEE7] text-xs font-medium flex items-center gap-1 bg-[#FAF8F3] px-2.5 py-1 rounded-md border border-[#E8E4DC]"
                 >
                   <span>+ Add Image URL</span>
                 </button>

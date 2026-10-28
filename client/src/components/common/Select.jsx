@@ -16,18 +16,18 @@ export default function Select({
   return (
     <div className={`w-full flex flex-col gap-1.5 ${className}`}>
       {label && (
-        <label htmlFor={selectId} className="text-sm font-medium text-gray-700 flex items-center gap-1">
+        <label htmlFor={selectId} className="text-xs font-medium text-[#292A26] tracking-wide flex items-center gap-1">
           {label}
-          {required && <span className="text-red-500">*</span>}
+          {required && <span className="text-[#C98268]">*</span>}
         </label>
       )}
       <select
         id={selectId}
         required={required}
-        className={`w-full px-3.5 py-2 text-sm bg-white border rounded-lg shadow-sm focus:outline-none focus:ring-2 transition-all ${
+        className={`w-full px-3.5 py-2.5 text-sm bg-white border rounded-md text-[#292A26] focus:outline-none transition-all ${
           error
-            ? 'border-red-300 text-red-900 focus:ring-red-500 focus:border-transparent'
-            : 'border-gray-300 text-gray-900 focus:ring-amber-500 focus:border-transparent hover:border-gray-400'
+            ? 'border-[#C98268] text-[#C98268] focus:border-[#C98268] focus:ring-1 focus:ring-[#C98268]'
+            : 'border-[#E8E4DC] hover:border-[#77766F]/60 focus:border-[#292A26] focus:ring-1 focus:ring-[#292A26]'
         }`}
         {...props}
       >

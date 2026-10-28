@@ -12,20 +12,21 @@ export default function Button({
   onClick,
   ...props
 }) {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+  const baseStyles = 'inline-flex items-center justify-center font-medium tracking-wide rounded-md transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-[#292A26] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer';
 
   const variants = {
-    primary: 'bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white focus:ring-amber-500 shadow-sm',
-    secondary: 'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white focus:ring-indigo-500 shadow-sm',
-    outline: 'border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 focus:ring-amber-500',
-    ghost: 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:ring-gray-400',
-    danger: 'bg-red-600 hover:bg-red-700 active:bg-red-800 text-white focus:ring-red-500 shadow-sm',
+    primary: 'bg-[#292A26] hover:bg-[#45463F] active:bg-[#1E1F1C] text-white shadow-xs',
+    secondary: 'border border-[#292A26] text-[#292A26] bg-transparent hover:bg-[#292A26] hover:text-white',
+    outline: 'border border-[#E8E4DC] text-[#292A26] bg-white hover:bg-[#F1EEE7] hover:border-[#77766F]',
+    ghost: 'text-[#77766F] hover:text-[#292A26] hover:bg-[#F1EEE7]',
+    danger: 'bg-[#C98268] hover:bg-[#A35D43] text-white shadow-xs',
+    sage: 'bg-[#A8B5A0] hover:bg-[#7E8F75] text-white shadow-xs',
   };
 
   const sizes = {
     sm: 'text-xs px-3 py-1.5 gap-1.5',
-    md: 'text-sm px-4 py-2 gap-2',
-    lg: 'text-base px-6 py-3 gap-2.5',
+    md: 'text-xs uppercase tracking-wider font-semibold px-5 py-2.5 gap-2',
+    lg: 'text-sm uppercase tracking-wider font-semibold px-7 py-3.5 gap-2.5',
   };
 
   return (

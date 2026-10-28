@@ -1,4 +1,4 @@
-# ToyNest — Permanent Coding Rules & Agent Directives
+# Toys Ecom — Permanent Coding Rules & Agent Directives
 
 ## 1. Core Technology Stack
 - **Frontend**: HTML5, Vanilla CSS / Tailwind CSS, JavaScript (ES6+), React 18+, React Router v6+.

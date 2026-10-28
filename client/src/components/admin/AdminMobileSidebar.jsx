@@ -10,8 +10,8 @@ export default function AdminMobileSidebar({ isOpen, onClose }) {
       <div className="fixed inset-0 bg-black/50 backdrop-blur-xs" onClick={onClose} />
 
       {/* Slide-over Drawer */}
-      <div className="fixed inset-y-0 left-0 w-64 bg-gray-900 shadow-2xl z-50">
-        <AdminSidebar />
+      <div className="fixed inset-y-0 left-0 w-64 bg-[#292A26] shadow-2xl z-50">
+        <AdminSidebar onClose={onClose} />
       </div>
     </div>
   );

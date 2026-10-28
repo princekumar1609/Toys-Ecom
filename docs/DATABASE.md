@@ -1,7 +1,7 @@
-# ToyNest Database Schema Specification (`DATABASE.md`)
+# Toys Ecom Database Schema Specification (`DATABASE.md`)
 
 ## 1. Overview
-ToyNest uses MongoDB as its primary document store, managed through Mongoose ORM models in Node.js.
+Toys Ecom uses MongoDB as its primary document store, managed through Mongoose ORM models in Node.js.
 
 ---
 

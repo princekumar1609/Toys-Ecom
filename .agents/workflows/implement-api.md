@@ -1,6 +1,6 @@
 # Workflow: Implement an API Feature
 
-This workflow guides the AI agent through implementing backend REST API features for ToyNest.
+This workflow guides the AI agent through implementing backend REST API features for Toys Ecom.
 
 ## Prerequisites
 1. Read `README.md`, `docs/ARCHITECTURE.md`, `docs/DATABASE.md`, and `docs/API.md`.

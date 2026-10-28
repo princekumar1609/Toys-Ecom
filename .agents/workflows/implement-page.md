@@ -1,6 +1,6 @@
 # Workflow: Implement a Page
 
-This workflow guides the AI agent through implementing a frontend page matching the approved Stitch design for ToyNest.
+This workflow guides the AI agent through implementing a frontend page matching the approved Stitch design for Toys Ecom.
 
 ## Prerequisites
 1. Read `README.md`, `docs/PROJECT.md`, `docs/DESIGN.md`, and `docs/ARCHITECTURE.md`.

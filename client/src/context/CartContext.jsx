@@ -5,7 +5,7 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState(() => {
     try {
-      const stored = localStorage.getItem('toynest_cart');
+      const stored = localStorage.getItem('toysecom_cart') || localStorage.getItem('toynest_cart');
       return stored ? JSON.parse(stored) : [];
     } catch (e) {
       console.error('Error loading cart from localStorage:', e);
@@ -17,7 +17,7 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem('toynest_cart', JSON.stringify(cartItems));
+      localStorage.setItem('toysecom_cart', JSON.stringify(cartItems));
     } catch (e) {
       console.error('Error saving cart to localStorage:', e);
     }
@@ -73,6 +73,7 @@ export function CartProvider({ children }) {
 
   const clearCart = () => {
     setCartItems([]);
+    localStorage.removeItem('toysecom_cart');
     localStorage.removeItem('toynest_cart');
   };
 

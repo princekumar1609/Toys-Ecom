@@ -12,7 +12,7 @@ export default function Pagination({
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className={`flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 rounded-xl mt-6 ${className}`}>
+    <div className={`flex items-center justify-between border border-[#E8E4DC] bg-white px-4 py-3 sm:px-6 rounded-md mt-8 ${className}`}>
       <div className="flex flex-1 justify-between sm:hidden">
         <Button
           variant="outline"
@@ -34,17 +34,17 @@ export default function Pagination({
 
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
-          <p className="text-xs text-gray-700">
-            Page <span className="font-medium">{currentPage}</span> of{' '}
-            <span className="font-medium">{totalPages}</span>
+          <p className="text-xs text-[#77766F]">
+            Page <span className="font-medium text-[#292A26]">{currentPage}</span> of{' '}
+            <span className="font-medium text-[#292A26]">{totalPages}</span>
           </p>
         </div>
         <div>
-          <nav className="isolate inline-flex -space-x-px rounded-md shadow-xs" aria-label="Pagination">
+          <nav className="isolate inline-flex -space-x-px rounded-md" aria-label="Pagination">
             <button
               onClick={() => onPageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="relative inline-flex items-center rounded-l-md px-2 py-1.5 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 disabled:opacity-50"
+              className="relative inline-flex items-center rounded-l-md px-3 py-1.5 text-xs text-[#77766F] border border-[#E8E4DC] hover:bg-[#F1EEE7] focus:z-20 disabled:opacity-40"
             >
               ←
             </button>
@@ -52,10 +52,10 @@ export default function Pagination({
               <button
                 key={page}
                 onClick={() => onPageChange(page)}
-                className={`relative inline-flex items-center px-3 py-1.5 text-xs font-semibold focus:z-20 ${
+                className={`relative inline-flex items-center px-3 py-1.5 text-xs font-medium focus:z-20 transition-colors ${
                   page === currentPage
-                    ? 'z-10 bg-amber-500 text-white focus-visible:outline-amber-600'
-                    : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50'
+                    ? 'z-10 bg-[#292A26] text-white border border-[#292A26]'
+                    : 'text-[#292A26] border border-[#E8E4DC] hover:bg-[#F1EEE7]'
                 }`}
               >
                 {page}
@@ -64,7 +64,7 @@ export default function Pagination({
             <button
               onClick={() => onPageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="relative inline-flex items-center rounded-r-md px-2 py-1.5 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 disabled:opacity-50"
+              className="relative inline-flex items-center rounded-r-md px-3 py-1.5 text-xs text-[#77766F] border border-[#E8E4DC] hover:bg-[#F1EEE7] focus:z-20 disabled:opacity-40"
             >
               →
             </button>

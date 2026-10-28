@@ -1,7 +1,7 @@
-# ToyNest Design System & Stitch Guidelines (`DESIGN.md`)
+# Toys Ecom Design System & Stitch Guidelines (`DESIGN.md`)
 
 ## 1. Design Philosophy & Source of Truth
-The Stitch design system is the **absolute reference** for ToyNest. The UI must invoke a joyful, vibrant, yet clean and modern e-commerce experience tailored to toy shoppers while providing a sleek, highly functional administrative dashboard.
+The Stitch design system is the **absolute reference** for Toys Ecom. The UI must invoke a joyful, vibrant, yet clean and modern e-commerce experience tailored to toy shoppers while providing a sleek, highly functional administrative dashboard.
 
 ---
 

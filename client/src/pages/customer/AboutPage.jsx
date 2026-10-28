@@ -2,98 +2,104 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Container from '../../components/common/Container';
 import Breadcrumb from '../../components/common/Breadcrumb';
-import Card from '../../components/common/Card';
 import Button from '../../components/common/Button';
 
 export default function AboutPage() {
   return (
-    <div className="py-6">
-      <Container className="space-y-12">
-        <Breadcrumb items={[{ label: 'About Us' }]} />
+    <div className="py-8 space-y-16">
+      <Container className="space-y-16">
+        <Breadcrumb items={[{ label: 'Our Philosophy' }]} />
 
-        {/* HERO BANNER */}
-        <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-3xl p-8 sm:p-12 text-center space-y-4 shadow-md">
-          <span className="text-4xl block">🧸</span>
-          <h1 className="text-3xl sm:text-5xl font-extrabold font-display">
-            Bringing Joy To Every Childhood
+        {/* HERO EDITORIAL BANNER */}
+        <div className="bg-[#F1EEE7] border border-[#E8E4DC] rounded-lg p-8 sm:p-14 lg:p-18 text-center space-y-4">
+          <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#77766F] block">
+            Our Story &amp; Philosophy
+          </span>
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-light text-[#292A26] max-w-3xl mx-auto leading-tight">
+            Conscious Play Designed For <span className="font-normal italic">Modern Childhood</span>
           </h1>
-          <p className="text-amber-50 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-            Founded with a passion for creative play, ToyNest is India’s favorite online store for safe, non-toxic, educational, and fun toys.
+          <p className="text-xs sm:text-sm md:text-base text-[#77766F] max-w-2xl mx-auto leading-relaxed font-normal">
+            Founded with an appreciation for Scandinavian design and mindful parenting, Toys Ecom offers toys that inspire tactile exploration, spatial creativity, and calm environments.
           </p>
         </div>
 
-        {/* STATS COUNTERS */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="p-6 text-center border border-gray-200">
-            <span className="text-3xl font-extrabold text-amber-500 font-display block">50,000+</span>
-            <span className="text-xs text-gray-500 font-medium">Happy Children</span>
-          </Card>
-          <Card className="p-6 text-center border border-gray-200">
-            <span className="text-3xl font-extrabold text-indigo-600 font-display block">500+</span>
-            <span className="text-xs text-gray-500 font-medium">Curated Toys</span>
-          </Card>
-          <Card className="p-6 text-center border border-gray-200">
-            <span className="text-3xl font-extrabold text-emerald-600 font-display block">100%</span>
-            <span className="text-xs text-gray-500 font-medium">Non-Toxic Safe</span>
-          </Card>
-          <Card className="p-6 text-center border border-gray-200">
-            <span className="text-3xl font-extrabold text-rose-500 font-display block">4.9 ★</span>
-            <span className="text-xs text-gray-500 font-medium">Customer Rating</span>
-          </Card>
+        {/* METRICS STRIP */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="p-6 sm:p-8 text-center bg-white border border-[#E8E4DC] rounded-lg space-y-1">
+            <span className="text-3xl sm:text-4xl font-display font-medium text-[#292A26] block">50,000+</span>
+            <span className="text-xs uppercase tracking-wider text-[#77766F] font-medium">Families Delighted</span>
+          </div>
+          <div className="p-6 sm:p-8 text-center bg-white border border-[#E8E4DC] rounded-lg space-y-1">
+            <span className="text-3xl sm:text-4xl font-display font-medium text-[#292A26] block">500+</span>
+            <span className="text-xs uppercase tracking-wider text-[#77766F] font-medium">Curated Essentials</span>
+          </div>
+          <div className="p-6 sm:p-8 text-center bg-white border border-[#E8E4DC] rounded-lg space-y-1">
+            <span className="text-3xl sm:text-4xl font-display font-medium text-[#292A26] block">100%</span>
+            <span className="text-xs uppercase tracking-wider text-[#77766F] font-medium">Non-Toxic &amp; BPA-Free</span>
+          </div>
+          <div className="p-6 sm:p-8 text-center bg-white border border-[#E8E4DC] rounded-lg space-y-1">
+            <span className="text-3xl sm:text-4xl font-display font-medium text-[#292A26] block">4.9 ★</span>
+            <span className="text-xs uppercase tracking-wider text-[#77766F] font-medium">Customer Satisfaction</span>
+          </div>
         </div>
 
-        {/* OUR CORE VALUES */}
-        <div className="space-y-6">
-          <div className="text-center max-w-xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-bold font-display text-gray-900">
-              Our Core Principles 🛡️
+        {/* CORE VALUES */}
+        <div className="space-y-8">
+          <div className="text-center max-w-xl mx-auto space-y-2">
+            <span className="text-[10px] uppercase tracking-widest font-semibold text-[#77766F] block">
+              Ethos
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-display font-medium text-[#292A26]">
+              Principles Guiding Our Collection
             </h2>
-            <p className="text-xs text-gray-500 mt-1">What makes ToyNest the trusted choice for parents.</p>
+            <p className="text-xs text-[#77766F]">What distinguishes Toys Ecom in conscious children's living.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="p-6 border border-gray-200 space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl font-bold">
-                🧪
-              </div>
-              <h3 className="font-bold text-gray-900 text-base">Uncompromising Safety</h3>
-              <p className="text-xs text-gray-600 leading-relaxed">
-                Every single toy in our catalog undergoes rigorous quality and safety inspections to ensure 100% BPA-free and non-toxic materials.
+            <div className="p-6 sm:p-8 bg-white border border-[#E8E4DC] rounded-lg space-y-3">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#A8B5A0] block font-semibold">
+                01 / Safety First
+              </span>
+              <h3 className="font-display font-medium text-lg text-[#292A26]">Uncompromising Standards</h3>
+              <p className="text-xs text-[#77766F] leading-relaxed">
+                Every toy undergoes comprehensive testing to verify zero toxins, safe natural water-based stains, and smooth, splinter-free finishes.
               </p>
-            </Card>
+            </div>
 
-            <Card className="p-6 border border-gray-200 space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-2xl font-bold">
-                🧩
-              </div>
-              <h3 className="font-bold text-gray-900 text-base">Educational STEM Value</h3>
-              <p className="text-xs text-gray-600 leading-relaxed">
-                We select toys that foster problem-solving, fine motor skills, spatial reasoning, and creative storytelling for growing minds.
+            <div className="p-6 sm:p-8 bg-white border border-[#E8E4DC] rounded-lg space-y-3">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#A8B5A0] block font-semibold">
+                02 / Cognitive Play
+              </span>
+              <h3 className="font-display font-medium text-lg text-[#292A26]">Thoughtful STEM Foundation</h3>
+              <p className="text-xs text-[#77766F] leading-relaxed">
+                We design and curate objects that invite open-ended inquiry, tactile problem-solving, architectural curiosity, and storytelling.
               </p>
-            </Card>
+            </div>
 
-            <Card className="p-6 border border-gray-200 space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl font-bold">
-                ❤️
-              </div>
-              <h3 className="font-bold text-gray-900 text-base">Smile Guarantee</h3>
-              <p className="text-xs text-gray-600 leading-relaxed">
-                If a toy doesn’t bring a bright smile to your child’s face, our 30-day easy return policy has you completely covered.
+            <div className="p-6 sm:p-8 bg-white border border-[#E8E4DC] rounded-lg space-y-3">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#A8B5A0] block font-semibold">
+                03 / Assurance
+              </span>
+              <h3 className="font-display font-medium text-lg text-[#292A26]">Mindful Experience</h3>
+              <p className="text-xs text-[#77766F] leading-relaxed">
+                If an item does not seamlessly fit into your home or your child’s development, our 30-day gentle return service guarantees peace of mind.
               </p>
-            </Card>
+            </div>
           </div>
         </div>
 
         {/* CTA CALLOUT */}
-        <div className="bg-gray-900 text-white rounded-3xl p-8 sm:p-12 text-center space-y-4 my-8 shadow-lg">
-          <h3 className="text-2xl sm:text-3xl font-bold font-display">Ready To Explore Our Toy Store?</h3>
-          <p className="text-xs sm:text-sm text-gray-300 max-w-md mx-auto leading-relaxed">
-            Discover action figures, lego building sets, wooden puzzles, and soft plushies today.
+        <div className="bg-[#FAF8F3] border border-[#E8E4DC] rounded-lg p-8 sm:p-14 text-center space-y-4">
+          <h3 className="text-2xl sm:text-3xl font-display font-medium text-[#292A26]">
+            Ready To Explore Our Curated Catalog?
+          </h3>
+          <p className="text-xs sm:text-sm text-[#77766F] max-w-md mx-auto leading-relaxed">
+            Discover architectural sets, STEM puzzles, wooden figurines, and soft companions.
           </p>
-          <div className="pt-2 flex justify-center">
+          <div className="pt-3 flex justify-center">
             <Link to="/shop">
-              <Button variant="primary" size="md">
-                Browse Toys Catalog Now →
+              <Button variant="primary" size="lg">
+                Explore Full Catalog →
               </Button>
             </Link>
           </div>

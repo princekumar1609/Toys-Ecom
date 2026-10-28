@@ -1,21 +1,21 @@
-# ToyNest System Architecture (`ARCHITECTURE.md`)
+# Toys Ecom System Architecture (`ARCHITECTURE.md`)
 
 ## 1. High-Level Architecture
-ToyNest follows a classic decoupled client-server architecture:
+Toys Ecom follows a classic decoupled client-server architecture:
 - **Client (Frontend)**: Single Page Application (SPA) built using React, JavaScript, React Router, and Tailwind CSS.
 - **Server (Backend)**: RESTful API server built using Node.js and Express.js.
 - **Database**: Document database powered by MongoDB and managed via Mongoose ORM models.
 
 ```text
 +-------------------------------------------------------+
-|                   ToyNest Client                      |
+|                  Toys Ecom Client                     |
 |           React SPA + Tailwind CSS + Axios            |
 +---------------------------+---------------------------+
                             |
                      HTTP / REST API
                             |
 +---------------------------v---------------------------+
-|                   ToyNest Server                      |
+|                  Toys Ecom Server                     |
 |          Node.js + Express.js Middleware              |
 |        Auth (JWT) | Controllers | Routers             |
 +---------------------------+---------------------------+
@@ -33,7 +33,7 @@ ToyNest follows a classic decoupled client-server architecture:
 ## 2. Directory Structure
 
 ```text
-ToyNest/
+ToysEcom/
 ├── README.md
 ├── .agents/
 │   ├── rules/

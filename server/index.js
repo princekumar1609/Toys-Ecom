@@ -9,5 +9,5 @@ connectDB();
 
 // Start Express Listener
 app.listen(PORT, () => {
-  console.log(`[Server] ToyNest Server running on http://localhost:${PORT}`);
+  console.log(`[Server] Toys Ecom Server running on http://localhost:${PORT}`);
 });

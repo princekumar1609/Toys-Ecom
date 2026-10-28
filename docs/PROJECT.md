@@ -1,7 +1,7 @@
-# ToyNest E-Commerce — Master Requirements (`PROJECT.md`)
+# Toys Ecom — Master Requirements (`PROJECT.md`)
 
 ## 1. Project Overview
-ToyNest is a modern, full-featured e-commerce platform dedicated to toy retail. It comprises two distinct user experiences:
+Toys Ecom is a modern, full-featured e-commerce platform dedicated to toy retail. It comprises two distinct user experiences:
 1. **Customer Panel**: A responsive public e-commerce web application for browsing toys, searching, filtering, managing user accounts, managing shopping carts, placing orders, tracking order statuses, and contacting customer support.
 2. **Admin Panel**: A secure management portal for business administrators to oversee products, categories, orders, customers, contact messages, and sales metrics.
 

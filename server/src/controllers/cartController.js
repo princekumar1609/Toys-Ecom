@@ -3,6 +3,7 @@ const Product = require('../models/Product');
 // Promo Coupons database configuration
 const VALID_COUPONS = {
   SUMMER30: { type: 'PERCENT', value: 30, description: '30% off subtotal' },
+  TOYSECOMFREE: { type: 'FREE_SHIPPING', value: 0, description: 'Free shipping on order' },
   TOYNESTFREE: { type: 'FREE_SHIPPING', value: 0, description: 'Free shipping on order' }
 };
 
@@ -124,7 +125,7 @@ const validateCoupon = async (req, res, next) => {
     if (!coupon) {
       return res.status(404).json({
         success: false,
-        message: 'Invalid coupon code. Try SUMMER30 or TOYNESTFREE.'
+        message: 'Invalid coupon code. Try SUMMER30 or TOYSECOMFREE.'
       });
     }
 

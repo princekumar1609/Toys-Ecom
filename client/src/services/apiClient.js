@@ -1,7 +1,7 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 export async function request(endpoint, options = {}) {
-  const token = localStorage.getItem('toynest_token');
+  const token = localStorage.getItem('toysecom_token') || localStorage.getItem('toynest_token');
 
   const headers = {
     'Content-Type': 'application/json',

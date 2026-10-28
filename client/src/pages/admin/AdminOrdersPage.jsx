@@ -85,12 +85,15 @@ export default function AdminOrdersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#E8E4DC]">
         <div>
-          <h1 className="text-2xl font-extrabold text-gray-900 font-display">
-            Order Fulfillment Center 📦
+          <span className="text-[10px] uppercase tracking-widest font-semibold text-[#77766F] block mb-1">
+            Fulfillment
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-display font-medium text-[#292A26]">
+            Order Fulfillment Center
           </h1>
-          <p className="text-xs text-gray-500 mt-1">Manage orders, update shipment tracking, and process payments.</p>
+          <p className="text-xs text-[#77766F] mt-1">Manage orders, update shipment tracking, and process receipts.</p>
         </div>
       </div>
 
@@ -154,8 +157,8 @@ export default function AdminOrdersPage() {
                     <td className="py-3 px-4"><StatusBadge status={ord.orderStatus} /></td>
                     <td className="py-3 px-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <button onClick={() => { setSelectedOrder(ord); setIsDetailsOpen(true); }} className="p-1.5 text-gray-500 hover:text-amber-600 rounded-lg">👁️ Details</button>
-                        <button onClick={() => handleOpenUpdateModal(ord)} className="p-1.5 text-amber-700 bg-amber-50 rounded-lg font-bold">⚙️ Update Status</button>
+                        <button onClick={() => { setSelectedOrder(ord); setIsDetailsOpen(true); }} className="px-2 py-1 text-xs text-[#77766F] hover:text-[#292A26] rounded-md border border-[#E8E4DC] hover:bg-[#FAF8F3]">Details</button>
+                        <button onClick={() => handleOpenUpdateModal(ord)} className="px-2 py-1 text-xs text-[#292A26] bg-[#FAF8F3] hover:bg-[#F1EEE7] border border-[#E8E4DC] rounded-md font-medium">Update Status</button>
                       </div>
                     </td>
                   </tr>

@@ -11,10 +11,10 @@ export default function Card({
   return (
     <div
       onClick={onClick}
-      className={`bg-white rounded-xl overflow-hidden transition-all duration-200 ${
-        bordered ? 'border border-gray-200' : ''
+      className={`bg-white rounded-lg overflow-hidden transition-all duration-200 ${
+        bordered ? 'border border-[#E8E4DC]' : ''
       } ${
-        hoverEffect ? 'hover:shadow-md hover:-translate-y-0.5 cursor-pointer' : 'shadow-sm'
+        hoverEffect ? 'hover:border-[#77766F]/50 hover:shadow-xs cursor-pointer' : ''
       } ${className}`}
       {...props}
     >
@@ -24,7 +24,7 @@ export default function Card({
 }
 
 Card.Header = function CardHeader({ children, className = '' }) {
-  return <div className={`px-6 py-4 border-b border-gray-100 ${className}`}>{children}</div>;
+  return <div className={`px-6 py-4 border-b border-[#E8E4DC] ${className}`}>{children}</div>;
 };
 
 Card.Body = function CardBody({ children, className = '' }) {
@@ -32,5 +32,5 @@ Card.Body = function CardBody({ children, className = '' }) {
 };
 
 Card.Footer = function CardFooter({ children, className = '' }) {
-  return <div className={`px-6 py-3 bg-gray-50 border-t border-gray-100 ${className}`}>{children}</div>;
+  return <div className={`px-6 py-3 bg-[#F1EEE7]/40 border-t border-[#E8E4DC] ${className}`}>{children}</div>;
 };

@@ -66,12 +66,15 @@ export default function AdminCustomersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#E8E4DC]">
         <div>
-          <h1 className="text-2xl font-extrabold text-gray-900 font-display">
-            Customer Directory 👥
+          <span className="text-[10px] uppercase tracking-widest font-semibold text-[#77766F] block mb-1">
+            Accounts
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-display font-medium text-[#292A26]">
+            Customer Directory
           </h1>
-          <p className="text-xs text-gray-500 mt-1">Manage customer accounts and enforce account blocks via REST API.</p>
+          <p className="text-xs text-[#77766F] mt-1">Manage customer profiles and account access.</p>
         </div>
       </div>
 
@@ -120,7 +123,7 @@ export default function AdminCustomersPage() {
                   <tr key={c._id} className="hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-4 font-bold text-gray-900">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center justify-center text-xs">
+                        <div className="w-8 h-8 rounded-full bg-[#FAF8F3] text-[#292A26] border border-[#E8E4DC] font-medium flex items-center justify-center text-xs">
                           {c.name.charAt(0)}
                         </div>
                         <span>{c.name}</span>
@@ -138,7 +141,7 @@ export default function AdminCustomersPage() {
                     </td>
                     <td className="py-3 px-4 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <button onClick={() => { setSelectedCustomer(c); setIsDetailsOpen(true); }} className="p-1.5 text-gray-500 hover:text-amber-600 rounded-lg">👁️ Inspect</button>
+                        <button onClick={() => { setSelectedCustomer(c); setIsDetailsOpen(true); }} className="p-1.5 text-[#77766F] hover:text-[#292A26] text-xs">Inspect</button>
                         <button
                           onClick={() => { setSelectedCustomer(c); setIsBlockModalOpen(true); }}
                           className={`p-1.5 font-bold rounded-lg text-xs ${c.status === 'ACTIVE' ? 'text-rose-600 bg-rose-50' : 'text-emerald-600 bg-emerald-50'}`}

@@ -72,7 +72,7 @@ const createOrder = async (req, res, next) => {
     }
 
     // Shipping fee
-    let shippingFee = subtotal >= 1999 || (couponCode && couponCode.toUpperCase() === 'TOYNESTFREE') ? 0 : 99;
+    let shippingFee = subtotal >= 1999 || (couponCode && (couponCode.toUpperCase() === 'TOYSECOMFREE' || couponCode.toUpperCase() === 'TOYNESTFREE')) ? 0 : 99;
     const grandTotal = Math.max(0, subtotal - discount + shippingFee);
 
     // Initial Payment status

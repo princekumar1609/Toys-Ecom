@@ -98,12 +98,15 @@ export default function AdminMessagesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#E8E4DC]">
         <div>
-          <h1 className="text-2xl font-extrabold text-gray-900 font-display">
-            Customer Support Messages 💬
+          <span className="text-[10px] uppercase tracking-widest font-semibold text-[#77766F] block mb-1">
+            Concierge Inbox
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-display font-medium text-[#292A26]">
+            Customer Inquiries &amp; Messages
           </h1>
-          <p className="text-xs text-gray-500 mt-1">Review inquiries, compose email replies, and track support resolution via REST API.</p>
+          <p className="text-xs text-[#77766F] mt-1">Review inquiries, compose replies, and track resolutions.</p>
         </div>
       </div>
 
@@ -151,7 +154,7 @@ export default function AdminMessagesPage() {
               </thead>
               <tbody className="divide-y divide-gray-100 text-gray-700">
                 {messages.map((msg) => (
-                  <tr key={msg._id} className={`hover:bg-gray-50 ${msg.status === 'NEW' ? 'bg-amber-50/40 font-bold' : ''}`}>
+                  <tr key={msg._id} className={`hover:bg-[#FAF8F3] transition-colors ${msg.status === 'NEW' ? 'bg-[#FAF8F3] font-semibold' : ''}`}>
                     <td className="py-3 px-4">
                       <span className="font-bold text-gray-900 block">{msg.name}</span>
                       <span className="text-[11px] text-gray-400">{msg.email}</span>

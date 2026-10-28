@@ -1,8 +1,8 @@
-# ToyNest E-Commerce — Antigravity Master Development Plan
+# Toys Ecom — Antigravity Master Development Plan
 
 ## Purpose
 
-This README is the MASTER DEVELOPMENT INSTRUCTION for the ToyNest project.
+This README is the MASTER DEVELOPMENT INSTRUCTION for the Toys Ecom project.
 
 The complete UI/UX design has already been created in Stitch.
 
@@ -90,7 +90,7 @@ unless the user explicitly requests them.
 
 # Project
 
-ToyNest is a modern toy e-commerce application.
+Toys Ecom is a modern toy e-commerce application.
 
 There are two separate panels:
 
@@ -363,7 +363,7 @@ docs/
 The purpose of these files is to make the project easy for an AI coding agent to understand and maintain.
 
 PROJECT.md:
-Document the complete ToyNest requirements.
+Document the complete Toys Ecom requirements.
 
 ARCHITECTURE.md:
 Document frontend and backend architecture.
@@ -513,7 +513,7 @@ Read:
 
 Inspect the Stitch designs.
 
-Create the reusable ToyNest design system.
+Create the reusable Toys Ecom design system.
 
 Implement reusable components for:
 
@@ -560,7 +560,7 @@ Implement the customer website shared layout.
 
 Read:
 
-- docs/PROJECT.md
+- docs/PROJECT.mdm
 - docs/DESIGN.md
 - docs/ARCHITECTURE.md
 
@@ -1777,7 +1777,7 @@ STOP after STEP 31.
 ```text
 Start STEP 32 only.
 
-Prepare ToyNest for production.
+Prepare Toys Ecom for production.
 
 Review:
 
@@ -1985,7 +1985,7 @@ This lets Antigravity understand the project before making changes.
 
 NEVER ask Antigravity:
 
-> "Build the entire ToyNest website."
+> "Build the entire Toys Ecom website."
 
 Instead use:
 
@@ -2008,7 +2008,7 @@ This keeps the AI agent controlled, predictable and easier to debug.
 The finished repository should look approximately like:
 
 ```text
-ToyNest/
+ToysEcom/
 │
 ├── README.md
 │

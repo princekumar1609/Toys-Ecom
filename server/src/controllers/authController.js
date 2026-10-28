@@ -15,7 +15,8 @@ const registerUser = async (req, res, next) => {
       });
     }
 
-    const userExists = await User.findOne({ email });
+    const normalizedEmail = email.toLowerCase().trim();
+    const userExists = await User.findOne({ email: normalizedEmail });
     if (userExists) {
       return res.status(400).json({
         success: false,
@@ -24,10 +25,10 @@ const registerUser = async (req, res, next) => {
     }
 
     const user = await User.create({
-      name,
-      email,
+      name: name.trim(),
+      email: normalizedEmail,
       password,
-      phone: phone || '',
+      phone: phone ? phone.trim() : '',
       role: 'CUSTOMER',
       status: 'ACTIVE'
     });
@@ -71,7 +72,8 @@ const loginUser = async (req, res, next) => {
       });
     }
 
-    const user = await User.findOne({ email }).select('+password');
+    const normalizedEmail = email.toLowerCase().trim();
+    const user = await User.findOne({ email: normalizedEmail }).select('+password');
 
     if (user && (await user.matchPassword(password))) {
       if (user.status === 'BLOCKED') {
@@ -119,7 +121,8 @@ const adminLogin = async (req, res, next) => {
       });
     }
 
-    const user = await User.findOne({ email }).select('+password');
+    const normalizedEmail = email.toLowerCase().trim();
+    const user = await User.findOne({ email: normalizedEmail }).select('+password');
 
     if (user && (await user.matchPassword(password))) {
       if (user.role !== 'ADMIN') {

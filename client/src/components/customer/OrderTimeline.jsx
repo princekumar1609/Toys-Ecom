@@ -2,11 +2,11 @@ import React from 'react';
 
 export default function OrderTimeline({ status = 'Pending' }) {
   const steps = [
-    { key: 'Pending', label: 'Order Placed', icon: '📝' },
-    { key: 'Confirmed', label: 'Confirmed', icon: '✅' },
-    { key: 'Packed', label: 'Packed', icon: '📦' },
-    { key: 'Shipped', label: 'Shipped', icon: '🚚' },
-    { key: 'Delivered', label: 'Delivered', icon: '🎉' },
+    { key: 'Pending', label: 'Order Placed' },
+    { key: 'Confirmed', label: 'Confirmed' },
+    { key: 'Packed', label: 'Packed' },
+    { key: 'Shipped', label: 'Shipped' },
+    { key: 'Delivered', label: 'Delivered' },
   ];
 
   const statusOrder = ['Pending', 'Confirmed', 'Packed', 'Shipped', 'Delivered'];
@@ -17,8 +17,8 @@ export default function OrderTimeline({ status = 'Pending' }) {
 
   if (isCancelled || isReturned) {
     return (
-      <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-center text-red-700 text-xs font-semibold">
-        {isCancelled ? '❌ Order Cancelled' : '🔄 Order Returned & Refunded'}
+      <div className="p-3 bg-[#C98268]/10 border border-[#C98268]/30 rounded-md text-center text-[#A35338] text-xs font-medium">
+        {isCancelled ? 'Order Cancelled' : 'Order Returned & Refund Processed'}
       </div>
     );
   }
@@ -27,9 +27,9 @@ export default function OrderTimeline({ status = 'Pending' }) {
     <div className="w-full py-4">
       <div className="flex items-center justify-between relative">
         {/* Progress Line */}
-        <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 -translate-y-1/2 z-0" />
+        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#E8E4DC] -translate-y-1/2 z-0" />
         <div
-          className="absolute top-1/2 left-0 h-1 bg-amber-500 -translate-y-1/2 z-0 transition-all duration-500"
+          className="absolute top-1/2 left-0 h-0.5 bg-[#292A26] -translate-y-1/2 z-0 transition-all duration-500"
           style={{ width: `${(Math.max(0, currentIndex) / (steps.length - 1)) * 100}%` }}
         />
 
@@ -41,18 +41,18 @@ export default function OrderTimeline({ status = 'Pending' }) {
           return (
             <div key={step.key} className="relative z-10 flex flex-col items-center group">
               <div
-                className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all shadow-xs ${
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-semibold transition-all ${
                   isCurrent
-                    ? 'bg-amber-500 text-white ring-4 ring-amber-100 scale-110'
+                    ? 'bg-[#292A26] text-white ring-2 ring-[#E8E4DC]'
                     : isCompleted
-                    ? 'bg-amber-500 text-white'
-                    : 'bg-white border-2 border-gray-300 text-gray-400'
+                    ? 'bg-[#A8B5A0] text-white'
+                    : 'bg-white border border-[#E8E4DC] text-[#77766F]'
                 }`}
               >
-                {step.icon}
+                {isCompleted ? '✓' : idx + 1}
               </div>
-              <span className={`text-[11px] font-semibold mt-2 text-center whitespace-nowrap ${
-                isCurrent ? 'text-amber-600' : isCompleted ? 'text-gray-900' : 'text-gray-400'
+              <span className={`text-[10px] uppercase tracking-wider font-medium mt-2 text-center whitespace-nowrap ${
+                isCurrent ? 'text-[#292A26] font-semibold' : isCompleted ? 'text-[#292A26]' : 'text-[#77766F]'
               }`}>
                 {step.label}
               </span>

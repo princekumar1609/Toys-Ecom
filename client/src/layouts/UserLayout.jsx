@@ -9,7 +9,7 @@ export default function UserLayout() {
   const [cartCount, setCartCount] = useState(2); // Initial mock cart counter
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900 font-sans">
+    <div className="min-h-screen flex flex-col bg-[#FAF8F3] text-[#292A26] font-sans antialiased selection:bg-[#A8B5A0]/25">
       {/* Global Customer Header */}
       <Header
         onOpenMobileMenu={() => setMobileMenuOpen(true)}

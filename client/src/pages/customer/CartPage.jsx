@@ -67,107 +67,165 @@ export default function CartPage() {
   };
 
   if (isLoading && cartItems.length > 0) {
-    return <LoadingState message="Verifying database prices & stock..." className="py-20" />;
+    return <LoadingState text="Reviewing bag items & stock..." className="py-24" />;
   }
 
   return (
-    <div className="py-6 space-y-6">
+    <div className="py-8 space-y-8">
       <Container>
-        <Breadcrumb items={[{ label: 'Shopping Cart' }]} />
+        <Breadcrumb items={[{ label: 'Shopping Bag' }]} />
 
-        <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-gray-900 mb-6">
-          Your Shopping Cart 🛒
-        </h1>
+        {/* HEADER */}
+        <div className="pb-4 border-b border-[#E8E4DC] mb-6">
+          <span className="text-[10px] uppercase tracking-widest font-semibold text-[#77766F] block mb-1">
+            Review Selection
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-display font-medium text-[#292A26]">
+            Your Shopping Bag
+          </h1>
+        </div>
 
         {cartItems.length > 0 && validationResult ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* ITEMS LIST */}
-            <div className="lg:col-span-2 space-y-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+            {/* ITEMS LIST (8 cols on laptop/desktop) */}
+            <div className="lg:col-span-8 space-y-4">
               {validationResult.items.map((item, idx) => (
-                <Card key={idx} className="p-4 border border-gray-200 shadow-xs flex items-center justify-between gap-4">
+                <div
+                  key={idx}
+                  className="p-4 sm:p-5 bg-white border border-[#E8E4DC] rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all"
+                >
                   <div className="flex items-center gap-4 min-w-0">
                     <img
                       src={item.product.thumbnailUrl}
                       alt={item.product.name}
-                      className="w-16 h-16 object-cover rounded-xl border flex-shrink-0"
+                      className="w-18 h-18 object-cover rounded-md bg-[#FAF8F3] border border-[#E8E4DC] flex-shrink-0"
                     />
-                    <div className="min-w-0">
-                      <h4 className="font-bold text-gray-900 text-sm truncate">{item.product.name}</h4>
-                      <p className="text-xs text-gray-400">SKU: {item.product.sku}</p>
-                      <span className="font-extrabold text-amber-600 text-sm block mt-0.5">₹{item.unitPrice}</span>
+                    <div className="min-w-0 space-y-0.5">
+                      <h4 className="font-medium text-[#292A26] text-sm truncate">{item.product.name}</h4>
+                      <p className="text-[11px] uppercase tracking-wider text-[#77766F]">
+                        SKU: {item.product.sku}
+                      </p>
+                      <span className="font-semibold text-[#292A26] text-sm block pt-1">
+                        ₹{item.unitPrice}
+                      </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center border rounded-lg bg-gray-50">
+                  {/* Quantity Stepper & Remove Action */}
+                  <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E8E4DC]/60">
+                    <div className="flex items-center border border-[#E8E4DC] rounded-md bg-[#FAF8F3]">
                       <button
+                        type="button"
                         onClick={() => handleUpdateQuantity(item.product._id, item.quantity - 1)}
-                        className="px-2 py-1 text-xs font-bold text-gray-600"
+                        className="w-7 h-7 flex items-center justify-center text-xs font-semibold text-[#292A26] hover:bg-[#E8E4DC]/50 cursor-pointer"
+                        aria-label="Decrease quantity"
                       >
-                        -
+                        −
                       </button>
-                      <span className="px-3 py-1 text-xs font-bold">{item.quantity}</span>
+                      <span className="px-3 text-xs font-semibold text-[#292A26]">{item.quantity}</span>
                       <button
+                        type="button"
                         onClick={() => handleUpdateQuantity(item.product._id, item.quantity + 1)}
-                        className="px-2 py-1 text-xs font-bold text-gray-600"
+                        className="w-7 h-7 flex items-center justify-center text-xs font-semibold text-[#292A26] hover:bg-[#E8E4DC]/50 cursor-pointer"
+                        aria-label="Increase quantity"
                       >
                         +
                       </button>
                     </div>
 
                     <button
+                      type="button"
                       onClick={() => handleRemoveItem(item.product._id)}
-                      className="text-rose-500 hover:text-rose-700 text-xs font-bold"
+                      className="text-xs uppercase tracking-wider font-medium text-[#77766F] hover:text-[#C98268] transition-colors cursor-pointer"
                     >
                       Remove
                     </button>
                   </div>
-                </Card>
+                </div>
               ))}
             </div>
 
-            {/* ORDER SUMMARY */}
-            <Card className="p-6 border border-gray-200 shadow-sm bg-white rounded-3xl h-fit space-y-6">
-              <h3 className="font-bold font-display text-gray-900 border-b pb-3">Order Summary</h3>
-
-              {/* Promo Coupon Form */}
-              <form onSubmit={handleApplyCoupon} className="space-y-2">
-                <label className="text-xs font-bold text-gray-700 uppercase">Promo Code</label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="e.g. SUMMER30"
-                    value={couponCode}
-                    onChange={(e) => setCouponCode(e.target.value)}
-                    className="flex-1 px-3 py-1.5 text-xs bg-gray-50 border rounded-lg uppercase"
-                  />
-                  <Button type="submit" variant="outline" size="sm">Apply</Button>
+            {/* ORDER SUMMARY (4 cols on laptop/desktop) */}
+            <div className="lg:col-span-4">
+              <div className="p-6 bg-white border border-[#E8E4DC] rounded-lg space-y-6 sticky top-28">
+                <div className="border-b border-[#E8E4DC] pb-3">
+                  <span className="text-[10px] uppercase tracking-widest font-semibold text-[#77766F] block mb-0.5">
+                    Order Details
+                  </span>
+                  <h3 className="font-display font-medium text-xl text-[#292A26]">
+                    Order Summary
+                  </h3>
                 </div>
-                {couponError && <p className="text-[11px] text-red-500">{couponError}</p>}
-                {appliedCoupon && <p className="text-[11px] text-emerald-600 font-bold">✨ Applied {appliedCoupon.code}!</p>}
-              </form>
 
-              {/* Totals */}
-              <div className="space-y-2 text-xs text-gray-600 border-t pt-3">
-                <div className="flex justify-between"><span>Subtotal</span><span>₹{validationResult.subtotal}</span></div>
-                <div className="flex justify-between text-emerald-600"><span>Discount</span><span>-₹{validationResult.discount}</span></div>
-                <div className="flex justify-between"><span>Shipping Fee</span><span>{validationResult.shippingFee === 0 ? 'FREE' : `₹${validationResult.shippingFee}`}</span></div>
-                <div className="flex justify-between font-extrabold text-base text-gray-900 pt-2 border-t"><span>Grand Total</span><span>₹{validationResult.grandTotal}</span></div>
+                {/* Promo Coupon Form */}
+                <form onSubmit={handleApplyCoupon} className="space-y-2">
+                  <label className="text-[11px] uppercase tracking-wider font-semibold text-[#292A26] block">
+                    Promo / Gift Code
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="E.g. SUMMER30"
+                      value={couponCode}
+                      onChange={(e) => setCouponCode(e.target.value)}
+                      className="flex-1 px-3 py-2 text-xs bg-[#FAF8F3] border border-[#E8E4DC] rounded-md uppercase font-mono text-[#292A26] focus:outline-none focus:border-[#292A26] focus:bg-white"
+                    />
+                    <Button type="submit" variant="secondary" size="sm" className="whitespace-nowrap">
+                      Apply
+                    </Button>
+                  </div>
+                  {couponError && <p className="text-[11px] text-[#C98268]">{couponError}</p>}
+                  {appliedCoupon && (
+                    <p className="text-[11px] text-[#3B5135] font-medium">
+                      ✓ Coupon {appliedCoupon.code} applied successfully!
+                    </p>
+                  )}
+                </form>
+
+                {/* Line Items */}
+                <div className="space-y-2.5 text-xs text-[#77766F] border-t border-[#E8E4DC] pt-4">
+                  <div className="flex justify-between">
+                    <span>Subtotal</span>
+                    <span className="font-medium text-[#292A26]">₹{validationResult.subtotal}</span>
+                  </div>
+                  {validationResult.discount > 0 && (
+                    <div className="flex justify-between text-[#A35338]">
+                      <span>Privilege Discount</span>
+                      <span className="font-medium">-₹{validationResult.discount}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span>Shipping</span>
+                    <span className="font-medium text-[#292A26]">
+                      {validationResult.shippingFee === 0 ? 'Complimentary' : `₹${validationResult.shippingFee}`}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-base font-semibold text-[#292A26] pt-3 border-t border-[#E8E4DC]">
+                    <span>Total Due</span>
+                    <span>₹{validationResult.grandTotal}</span>
+                  </div>
+                  <p className="text-[10px] text-[#77766F] text-right">Includes applicable GST</p>
+                </div>
+
+                <Link to="/checkout" className="block pt-2">
+                  <Button variant="primary" size="lg" className="w-full">
+                    Proceed To Checkout →
+                  </Button>
+                </Link>
+
+                <div className="text-center pt-2">
+                  <Link to="/shop" className="text-xs uppercase tracking-wider text-[#77766F] hover:text-[#292A26] transition-colors">
+                    ← Continue Browsing
+                  </Link>
+                </div>
               </div>
-
-              <Link to="/checkout" className="block">
-                <Button variant="primary" size="lg" className="w-full">
-                  Proceed To Checkout →
-                </Button>
-              </Link>
-            </Card>
+            </div>
           </div>
         ) : (
           <EmptyState
-            icon="🛒"
-            title="Your Cart is Empty"
-            description="Looks like you haven't added any toys to your cart yet."
-            actionLabel="Explore Toys Catalog Now"
+            title="Your Shopping Bag Is Empty"
+            description="Explore our thoughtfully designed toys, STEM puzzles, and open-ended play materials."
+            actionLabel="Discover Catalog"
             onAction={() => window.location.href = '/shop'}
           />
         )}

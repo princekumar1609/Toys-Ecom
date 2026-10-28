@@ -67,12 +67,12 @@ export default function AuthModal({ isOpen, onClose }) {
     >
       <div className="space-y-4">
         {errorMessage && (
-          <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl font-medium">
-            ⚠️ {errorMessage}
+          <div className="p-3 bg-[#C98268]/10 border border-[#C98268]/30 text-[#A35338] text-xs rounded-md font-medium">
+            {errorMessage}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3.5">
           {mode === 'register' && (
             <Input
               label="Full Name"
@@ -111,30 +111,30 @@ export default function AuthModal({ isOpen, onClose }) {
             />
           )}
 
-          <Button type="submit" variant="primary" size="md" className="w-full mt-2 shadow-sm" isLoading={isLoading}>
+          <Button type="submit" variant="primary" size="md" className="w-full mt-2" isLoading={isLoading}>
             {mode === 'login' ? 'Sign In Now' : 'Create Customer Account'}
           </Button>
         </form>
 
-        <div className="text-center pt-3 border-t border-gray-100 text-xs">
+        <div className="text-center pt-3 border-t border-[#E8E4DC] text-xs">
           {mode === 'login' ? (
-            <p className="text-gray-500">
-              New to ToyNest?{' '}
+            <p className="text-[#77766F]">
+              New to Toys Ecom?{' '}
               <button
                 type="button"
                 onClick={() => handleSwitchMode('register')}
-                className="text-amber-600 font-bold hover:underline"
+                className="text-[#292A26] font-semibold hover:text-[#C98268] transition-colors ml-1"
               >
                 Create Account →
               </button>
             </p>
           ) : (
-            <p className="text-gray-500">
+            <p className="text-[#77766F]">
               Already have an account?{' '}
               <button
                 type="button"
                 onClick={() => handleSwitchMode('login')}
-                className="text-amber-600 font-bold hover:underline"
+                className="text-[#292A26] font-semibold hover:text-[#C98268] transition-colors ml-1"
               >
                 Sign In Here →
               </button>
