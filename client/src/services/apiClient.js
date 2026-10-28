@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const rawBaseUrl = (import.meta.env.VITE_API_URL || '/api').trim().replace(/\/+$/, '');
+const API_BASE_URL = rawBaseUrl.endsWith('/api') ? rawBaseUrl : `${rawBaseUrl}/api`;
 
 export async function request(endpoint, options = {}) {
   const token = localStorage.getItem('toysecom_token') || localStorage.getItem('toynest_token');
@@ -17,8 +18,10 @@ export async function request(endpoint, options = {}) {
     headers,
   };
 
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+    const response = await fetch(`${API_BASE_URL}${cleanEndpoint}`, config);
     const data = await response.json();
 
     if (!response.ok) {
